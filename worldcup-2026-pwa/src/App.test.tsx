@@ -13,6 +13,6 @@ describe('App', () => {
     expect(screen.getByRole('heading', { name: '分组积分' })).toBeInTheDocument()
     expect(screen.getByText('小组第三名排名')).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: '球员榜' })).toBeInTheDocument()
-    expect(screen.getAllByTestId('scorer-row')).toHaveLength(20)
+    expect(screen.getAllByTestId('leader-row')).toHaveLength(20)
   })
 })
