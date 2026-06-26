@@ -1,43 +1,9 @@
 import './App.css'
 
-const matches = [
-  {
-    id: 'bra-ger',
-    time: 'LIVE',
-    venue: 'MetLife Stadium',
-    homeFlag: '🇧🇷',
-    home: '巴西',
-    score: '2-1',
-    away: '德国',
-    awayFlag: '🇩🇪',
-    status: "68' 进行中",
-    actions: ['澳视直播', '央视频'],
-  },
-  {
-    id: 'mex-fra',
-    time: '23:00',
-    venue: 'Azteca',
-    homeFlag: '🇲🇽',
-    home: '墨西哥',
-    score: '-',
-    away: '法国',
-    awayFlag: '🇫🇷',
-    status: '未开始',
-    actions: ['澳视直播', '央视频'],
-  },
-  {
-    id: 'arg-jpn',
-    time: '02:00',
-    venue: 'BC Place',
-    homeFlag: '🇦🇷',
-    home: '阿根廷',
-    score: '3-0',
-    away: '日本',
-    awayFlag: '🇯🇵',
-    status: '已结束',
-    actions: ['FIFA集锦', '央视频集锦'],
-  },
-]
+import { KnockoutBracket } from './features/matches/KnockoutBracket'
+import { MatchDetailPanel } from './features/matches/MatchDetailPanel'
+import { MatchSchedule } from './features/matches/MatchSchedule'
+import { matches } from './features/matches/matchData'
 
 const groups = Array.from({ length: 12 }, (_, index) => {
   const code = String.fromCharCode(65 + index)
@@ -141,59 +107,8 @@ function App() {
               </div>
             </section>
 
-            <section className="card">
-              <div className="card-head">
-                <div>
-                  <h2>赛程与比分</h2>
-                  <p>每场比赛内提供直播或集锦入口</p>
-                </div>
-                <span className="pill">3 场</span>
-              </div>
-              <div className="filters">
-                {['今日', '小组赛', '淘汰赛对阵图', '16 强', '半决赛', '决赛'].map((item, index) => (
-                  <button className={index === 0 ? 'chip active' : 'chip'} key={item}>
-                    {item}
-                  </button>
-                ))}
-              </div>
-              <div className="match-list">
-                {matches.map((match) => (
-                  <article className="match-card" key={match.id}>
-                    <div className="time">
-                      <strong>{match.time}</strong>
-                      <small>{match.venue}</small>
-                    </div>
-                    <div className="team"><span>{match.homeFlag}</span>{match.home}</div>
-                    <div className="score">{match.score}</div>
-                    <div className="team right">{match.away}<span>{match.awayFlag}</span></div>
-                    <div className="match-actions">
-                      <small>{match.status}</small>
-                      <div>
-                        {match.actions.map((action) => (
-                          <a href="https://worldcup.cctv.com/" key={action} target="_blank">{action}</a>
-                        ))}
-                      </div>
-                    </div>
-                  </article>
-                ))}
-              </div>
-
-              <section className="knockout-strip">
-                <h3>淘汰赛对阵图</h3>
-                <div className="knockout-grid">
-                  {['32 强', '16 强', '半决赛', '决赛'].map((stage) => (
-                    <div className="ko-col" key={stage}>
-                      <h4>{stage}</h4>
-                      <div className="ko-game">
-                        <span>🇲🇽 A1 墨西哥</span>
-                        <b>vs</b>
-                        <span>🇲🇦 第三名 8</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            </section>
+            <MatchSchedule matches={matches} />
+            <KnockoutBracket />
 
             <div className="two-col">
               <section className="card">
@@ -277,17 +192,7 @@ function App() {
                 <b>2.84<span>场均进球</span></b>
               </div>
             </section>
-            <section className="card">
-              <div className="card-head">
-                <h2>比赛详情</h2>
-              </div>
-              <div className="detail-tabs">
-                {['赛况', '阵容', '数据', '集锦', '新闻'].map((tab, index) => (
-                  <span className={index === 0 ? 'active' : ''} key={tab}>{tab}</span>
-                ))}
-              </div>
-              <p className="note">直播和集锦以当地版权可用性为准；正式版优先匹配具体场次链接。</p>
-            </section>
+            <MatchDetailPanel match={matches[0]} />
           </aside>
         </div>
       </main>
