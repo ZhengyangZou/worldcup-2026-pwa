@@ -4,18 +4,8 @@ import { KnockoutBracket } from './features/matches/KnockoutBracket'
 import { MatchDetailPanel } from './features/matches/MatchDetailPanel'
 import { MatchSchedule } from './features/matches/MatchSchedule'
 import { matches } from './features/matches/matchData'
-
-const groups = Array.from({ length: 12 }, (_, index) => {
-  const code = String.fromCharCode(65 + index)
-  const teams = [
-    ['🇲🇽', '墨西哥', 6, '+4', '晋级区'],
-    ['🇰🇷', '韩国', 4, '+1', '晋级区'],
-    ['🇯🇵', '日本', 3, '-1', '第3比较'],
-    ['🇿🇦', '南非', 1, '-2', '出局区'],
-  ]
-
-  return { code, teams }
-})
+import { StandingsSection } from './features/standings/StandingsSection'
+import { groupStandings, thirdPlaceCandidates } from './features/standings/standingsData'
 
 const scorers = [
   ['姆巴佩', '🇫🇷 法国 · 前锋', '5', '姆'],
@@ -38,21 +28,6 @@ const scorers = [
   ['戴维', '🇨🇦 加拿大 · 前锋', '1', '戴'],
   ['努涅斯', '🇺🇾 乌拉圭 · 前锋', '1', '努'],
   ['奥斯梅恩', '🇳🇬 尼日利亚 · 前锋', '1', '奥'],
-]
-
-const thirdPlaceTeams = [
-  ['🇯🇵 日本', 'B', '3', '-1', true],
-  ['🇨🇭 瑞士', 'E', '3', '0', true],
-  ['🇨🇲 喀麦隆', 'G', '3', '-1', true],
-  ['🇵🇱 波兰', 'H', '3', '-1', true],
-  ['🇺🇦 乌克兰', 'J', '3', '0', true],
-  ['🇵🇾 巴拉圭', 'K', '3', '0', true],
-  ['🇨🇮 科特迪瓦', 'L', '3', '0', true],
-  ['🇲🇦 摩洛哥', 'D', '3', '-1', true],
-  ['🇺🇸 美国', 'C', '2', '0', false],
-  ['🇭🇷 克罗地亚', 'F', '2', '0', false],
-  ['🇬🇭 加纳', 'I', '2', '0', false],
-  ['🇿🇦 南非', 'A', '1', '-2', false],
 ]
 
 function App() {
@@ -111,43 +86,7 @@ function App() {
             <KnockoutBracket />
 
             <div className="two-col">
-              <section className="card">
-                <div className="card-head">
-                  <div>
-                    <h2>分组积分</h2>
-                    <p>12 个小组全部展示；前二直接晋级，第三名进入比较</p>
-                  </div>
-                </div>
-                <div className="group-grid">
-                  {groups.map((group) => (
-                    <div className="group-card" key={group.code}>
-                      <h3>{group.code} 组</h3>
-                      {group.teams.map(([flag, name, points, goalDiff, status], index) => (
-                        <div className="standing-row" key={`${group.code}-${name}`}>
-                          <span>{index + 1}</span>
-                          <b>{flag} {name}</b>
-                          <span>{goalDiff}</span>
-                          <strong>{points}</strong>
-                          <em className={status === '晋级区' ? 'advance' : status === '第3比较' ? 'third' : 'out'}>{status}</em>
-                        </div>
-                      ))}
-                    </div>
-                  ))}
-                  <div className="group-card wide">
-                    <h3>小组第三名排名</h3>
-                    {thirdPlaceTeams.map(([team, group, points, goalDiff, advances], index) => (
-                      <div className="standing-row" key={`${team}`}>
-                        <span>{index + 1}</span>
-                        <b>{team}</b>
-                        <span>{group}</span>
-                        <strong>{points}</strong>
-                        <em className={advances ? 'advance' : 'out'}>{advances ? '晋级' : '淘汰线'}</em>
-                        <small>{goalDiff}</small>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </section>
+              <StandingsSection groups={groupStandings} thirdPlaceCandidates={thirdPlaceCandidates} />
 
               <section className="card">
                 <div className="card-head">

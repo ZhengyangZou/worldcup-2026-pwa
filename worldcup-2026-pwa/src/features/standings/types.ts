@@ -16,6 +16,7 @@ export type ThirdPlaceCandidate = {
   group: GroupCode
   teamId: string
   teamName: string
+  flag?: string
   points: number
   goalDifference: number
   goalsFor: number
@@ -25,4 +26,20 @@ export type ThirdPlaceCandidate = {
 export type RankedThirdPlaceTeam = ThirdPlaceCandidate & {
   rank: number
   advances: boolean
+}
+
+export type StandingStatus = 'advance' | 'thirdComparison' | 'out'
+
+export interface StandingTeam {
+  id: string
+  flag: string
+  name: string
+  points: number
+  goalDifference: number
+  status: StandingStatus
+}
+
+export interface GroupStanding {
+  code: GroupCode
+  teams: StandingTeam[]
 }
