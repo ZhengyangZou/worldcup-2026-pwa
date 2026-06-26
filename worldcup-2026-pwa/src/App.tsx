@@ -4,33 +4,14 @@ import { KnockoutBracket } from './features/matches/KnockoutBracket'
 import { MatchDetailPanel } from './features/matches/MatchDetailPanel'
 import { MatchSchedule } from './features/matches/MatchSchedule'
 import { matches } from './features/matches/matchData'
+import { PlayerLeaderboard } from './features/players/PlayerLeaderboard'
+import { leaderboards } from './features/players/playerLeaderboardData'
 import { StandingsSection } from './features/standings/StandingsSection'
 import { groupStandings, thirdPlaceCandidates } from './features/standings/standingsData'
 
-const scorers = [
-  ['姆巴佩', '🇫🇷 法国 · 前锋', '5', '姆'],
-  ['维尼修斯', '🇧🇷 巴西 · 边锋', '4', '维'],
-  ['梅西', '🇦🇷 阿根廷 · 前锋', '3', '梅'],
-  ['布鲁诺·费尔南德斯', '🇵🇹 葡萄牙 · 中场', '3', 'B'],
-  ['哈里·凯恩', '🏴 英格兰 · 前锋', '3', '凯'],
-  ['劳塔罗', '🇦🇷 阿根廷 · 前锋', '2', '劳'],
-  ['哈兰德', '🇳🇴 挪威 · 前锋', '2', '哈'],
-  ['贝林厄姆', '🏴 英格兰 · 中场', '2', '贝'],
-  ['罗德里戈', '🇧🇷 巴西 · 前锋', '2', '罗'],
-  ['萨拉赫', '🇪🇬 埃及 · 前锋', '2', '萨'],
-  ['孙兴慜', '🇰🇷 韩国 · 前锋', '2', '孙'],
-  ['莱万多夫斯基', '🇵🇱 波兰 · 前锋', '2', '莱'],
-  ['亚马尔', '🇪🇸 西班牙 · 边锋', '1', '亚'],
-  ['佩德里', '🇪🇸 西班牙 · 中场', '1', '佩'],
-  ['格列兹曼', '🇫🇷 法国 · 前场', '1', '格'],
-  ['穆西亚拉', '🇩🇪 德国 · 中场', '1', '穆'],
-  ['三笘薰', '🇯🇵 日本 · 边锋', '1', '三'],
-  ['戴维', '🇨🇦 加拿大 · 前锋', '1', '戴'],
-  ['努涅斯', '🇺🇾 乌拉圭 · 前锋', '1', '努'],
-  ['奥斯梅恩', '🇳🇬 尼日利亚 · 前锋', '1', '奥'],
-]
-
 function App() {
+  const primaryLeaderboard = leaderboards[0]
+
   return (
     <div className="app-shell">
       <header className="top-nav">
@@ -88,34 +69,11 @@ function App() {
             <div className="two-col">
               <StandingsSection groups={groupStandings} thirdPlaceCandidates={thirdPlaceCandidates} />
 
-              <section className="card">
-                <div className="card-head">
-                  <div>
-                    <h2>球员榜</h2>
-                    <p>当前榜单展示 Top 20；切换后展示对应榜单 Top 20</p>
-                  </div>
-                </div>
-                <div className="filters">
-                  {['射手榜', '助攻榜', '扑救榜', '黄牌榜'].map((item, index) => (
-                    <button className={index === 0 ? 'chip active' : 'chip'} key={item}>
-                      {item}
-                    </button>
-                  ))}
-                </div>
-                <div className="leader-list">
-                  {scorers.map(([name, team, goals, avatar], index) => (
-                    <a data-testid="scorer-row" className="leader-row" href="#player" key={`${name}-${index}`}>
-                      <span className="rank">{index + 1}</span>
-                      <span className="avatar">{avatar}</span>
-                      <span>
-                        <b>{name}</b>
-                        <small>{team}</small>
-                      </span>
-                      <strong>{goals}</strong>
-                    </a>
-                  ))}
-                </div>
-              </section>
+              <PlayerLeaderboard
+                entries={primaryLeaderboard.entries}
+                title={primaryLeaderboard.title}
+                unit={primaryLeaderboard.unit}
+              />
             </div>
           </div>
 
