@@ -17,3 +17,15 @@ export interface LeaderboardConfig {
   unit: string
   entries: LeaderboardEntry[]
 }
+
+export interface PlayerProfile {
+  age: number
+  avatarUrl?: string
+  fallbackColor: string
+  id: string
+  keyStat: string
+  name: string
+  position: string
+  teamFlag: string
+  teamName: string
+}

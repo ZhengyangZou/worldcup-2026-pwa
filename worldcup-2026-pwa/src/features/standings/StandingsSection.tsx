@@ -36,7 +36,9 @@ export function StandingsSection({ groups, thirdPlaceCandidates }: StandingsSect
             {group.teams.map((team, index) => (
               <div className="standing-row" key={team.id}>
                 <span>{index + 1}</span>
-                <b>{team.flag} {team.name}</b>
+                <b>
+                  <a href={`#team-${team.id}`}>{team.flag} {team.name}</a>
+                </b>
                 <span>{team.goalDifference > 0 ? `+${team.goalDifference}` : team.goalDifference}</span>
                 <strong>{team.points}</strong>
                 <em className={statusClassNames[team.status]}>{statusLabels[team.status]}</em>
@@ -49,7 +51,9 @@ export function StandingsSection({ groups, thirdPlaceCandidates }: StandingsSect
           {thirdPlaceTeams.map((team) => (
             <div className="standing-row" data-testid="third-place-row" key={team.teamId}>
               <span>{team.rank}</span>
-              <b>{team.flag} {team.teamName}</b>
+              <b>
+                <a href={`#team-${team.teamId}`}>{team.flag} {team.teamName}</a>
+              </b>
               <span>{team.group}</span>
               <strong>{team.points}</strong>
               <em className={team.advances ? 'advance' : 'out'}>{team.advances ? '晋级' : '淘汰线'}</em>

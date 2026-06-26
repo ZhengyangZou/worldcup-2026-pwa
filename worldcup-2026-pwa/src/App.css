@@ -404,6 +404,16 @@
   white-space: nowrap;
 }
 
+.standing-row a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.standing-row a:hover,
+.leader-row:hover {
+  color: #16b33f;
+}
+
 .standing-row em {
   border-radius: 3px;
   font-size: 9px;
@@ -489,6 +499,44 @@
 .overview b {
   padding: 14px 16px;
   border-top: 1px solid #edf2ef;
+}
+
+.profile-body,
+.team-profile-body {
+  padding: 0 14px 14px;
+}
+
+.profile-body {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+}
+
+.profile-body b,
+.profile-body span,
+.team-profile-body b,
+.team-profile-body span {
+  display: block;
+}
+
+.profile-body b,
+.team-profile-body b {
+  font-size: 15px;
+}
+
+.profile-body span,
+.team-profile-body span {
+  margin-top: 3px;
+  color: #718078;
+  font-size: 11px;
+}
+
+.profile-body p,
+.team-profile-body p {
+  margin: 8px 0 0;
+  color: #4e5f56;
+  font-size: 12px;
+  line-height: 1.55;
 }
 
 .detail-tabs {
