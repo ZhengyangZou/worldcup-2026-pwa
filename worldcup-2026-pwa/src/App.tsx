@@ -10,6 +10,8 @@ import { PlayerLeaderboard } from './features/players/PlayerLeaderboard'
 import { leaderboards } from './features/players/playerLeaderboardData'
 import { StandingsSection } from './features/standings/StandingsSection'
 import { groupStandings, thirdPlaceCandidates } from './features/standings/standingsData'
+import { TournamentOverview } from './features/tournament/TournamentOverview'
+import { tournamentMetrics } from './features/tournament/tournamentData'
 
 function App() {
   const primaryLeaderboard = leaderboards[0]
@@ -70,17 +72,7 @@ function App() {
           </div>
 
           <aside className="side-column">
-            <section className="card">
-              <div className="card-head">
-                <h2>赛事概览</h2>
-              </div>
-              <div className="overview">
-                <b>32<span>已赛</span></b>
-                <b>72<span>待赛</span></b>
-                <b>91<span>总进球</span></b>
-                <b>2.84<span>场均进球</span></b>
-              </div>
-            </section>
+            <TournamentOverview metrics={tournamentMetrics} />
             <MatchDetailPanel match={matches[0]} />
           </aside>
         </div>
