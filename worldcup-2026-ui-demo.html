@@ -1,0 +1,1797 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#087454">
+  <title>2026 世界杯 PWA UI Demo</title>
+  <style>
+    :root {
+      --green: #16b33f;
+      --deep: #069735;
+      --mint: #eaf9ee;
+      --gold: #f4bc42;
+      --red: #e85550;
+      --ink: #17231e;
+      --muted: #718078;
+      --line: #dfe8e3;
+      --bg: #f4f5f4;
+      --card: #ffffff;
+      --shadow: 0 6px 16px rgba(30, 70, 45, .07);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+    }
+
+    .app { min-height: 100vh; }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      height: 58px;
+      padding: 0 26px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      background: var(--green);
+      color: #fff;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      font-size: 17px;
+      white-space: nowrap;
+    }
+
+    .logo {
+      width: 31px;
+      height: 31px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 255, 255, .16);
+      font-weight: 900;
+    }
+
+    .side-note { display: none; }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      min-width: 0;
+      overflow: auto;
+    }
+
+    .nav a {
+      display: flex;
+      align-items: center;
+      padding: 18px 12px 15px;
+      border-radius: 0;
+      color: rgba(255, 255, 255, .86);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap;
+      border-bottom: 3px solid transparent;
+    }
+
+    .nav a.active {
+      background: transparent;
+      color: #fff;
+      border-bottom-color: #fff;
+    }
+
+    .content {
+      min-width: 0;
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 14px 18px 24px;
+      overflow-x: hidden;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 10px;
+      padding: 10px 2px;
+    }
+
+    .topbar h1 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: -.02em;
+      overflow-wrap: anywhere;
+    }
+
+    .sync {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border: 1px solid #d8eadf;
+      border-radius: 4px;
+      background: #fff;
+      color: #52645c;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #25b26d;
+      box-shadow: 0 0 0 4px #e1f4e9;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .dashboard > *,
+    .headline-grid > *,
+    .two-col > *,
+    .group-grid > *,
+    .knockout-grid > * {
+      min-width: 0;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      min-height: 142px;
+      padding: 17px 18px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+      box-shadow: var(--shadow);
+    }
+
+    .hero::after {
+      content: "26";
+      position: absolute;
+      right: 20px;
+      bottom: -78px;
+      font-size: 210px;
+      line-height: 1;
+      font-weight: 950;
+      color: rgba(255, 255, 255, .13);
+      font-style: italic;
+    }
+
+    .eyebrow {
+      position: relative;
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .hero h2 {
+      position: relative;
+      margin: 8px 0 7px;
+      font-size: 25px;
+      letter-spacing: -.03em;
+      overflow-wrap: anywhere;
+    }
+
+    .hero p {
+      position: relative;
+      max-width: 600px;
+      margin: 0;
+      color: #56665d;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .hero-stats {
+      position: relative;
+      display: flex;
+      gap: 26px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .hero-stat b {
+      display: block;
+      color: var(--green);
+      font-size: 21px;
+      font-family: Georgia, serif;
+    }
+
+    .hero-stat span {
+      color: #7d8983;
+      font-size: 11px;
+    }
+
+    .headline-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .focus-news {
+      min-height: 150px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background:
+        linear-gradient(90deg, rgba(0, 0, 0, .55), rgba(0, 0, 0, .12)),
+        linear-gradient(135deg, #0c6c35, #1cbe57);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .focus-news b {
+      font-size: 20px;
+      line-height: 1.35;
+      letter-spacing: -.02em;
+      overflow-wrap: anywhere;
+    }
+
+    .focus-news span {
+      margin-top: 7px;
+      color: rgba(255, 255, 255, .82);
+      font-size: 12px;
+    }
+
+    .news-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .news-item {
+      display: block;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 850;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+
+    .news-item:hover {
+      border-color: #bfe6c8;
+      color: var(--green);
+    }
+
+    .news-item small {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .link-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: 6px;
+      color: var(--green);
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .news-module {
+      padding: 0 14px 14px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .news-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      padding: 11px 0;
+      border-top: 1px solid #edf2ef;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .news-row:first-child {
+      border-top: 0;
+    }
+
+    .news-row b {
+      display: block;
+      font-size: 13px;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+
+    .news-row small {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .source-tag {
+      padding: 4px 7px;
+      border-radius: 3px;
+      background: var(--mint);
+      color: var(--green);
+      font-size: 10px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .watch-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      padding: 0 14px 14px;
+    }
+
+    .watch-link {
+      display: block;
+      padding: 11px 12px;
+      border: 1px solid #dfe8e3;
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.45;
+    }
+
+    .watch-link small {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .watch-link:hover {
+      border-color: #bfe6c8;
+      color: var(--green);
+    }
+
+    .detail-tabs {
+      display: flex;
+      gap: 8px;
+      overflow: auto;
+      padding: 0 0 12px;
+      border-bottom: 1px solid #edf2ef;
+      margin-bottom: 12px;
+    }
+
+    .detail-tabs span {
+      flex: 0 0 auto;
+      padding: 7px 4px;
+      color: #617069;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .detail-tabs .active {
+      color: var(--green);
+      box-shadow: inset 0 -2px 0 var(--green);
+    }
+
+    .section {
+      margin-top: 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--card);
+      overflow: hidden;
+      box-shadow: none;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 14px 9px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 900;
+    }
+
+    .section-sub {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .filters {
+      display: flex;
+      gap: 8px;
+      overflow: auto;
+      padding: 0 14px 10px;
+    }
+
+    .chip {
+      border: 0;
+      border-radius: 0;
+      padding: 7px 6px;
+      background: transparent;
+      color: #63746c;
+      font-weight: 800;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .chip.active {
+      color: var(--green);
+      box-shadow: inset 0 -2px 0 var(--green);
+    }
+
+    .match-list {
+      padding: 0 14px;
+    }
+
+    .knockout-strip {
+      margin: 0 14px 14px;
+      padding: 10px;
+      border: 1px solid #edf2ef;
+      border-radius: 6px;
+      background: #fbfdfb;
+    }
+
+    .knockout-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .knockout-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(150px, 1fr));
+      gap: 8px;
+      overflow-x: auto;
+      width: 100%;
+    }
+
+    .ko-col {
+      min-width: 150px;
+    }
+
+    .ko-col h4 {
+      margin: 0 0 6px;
+      color: #51635a;
+      font-size: 11px;
+    }
+
+    .ko-game {
+      display: grid;
+      gap: 4px;
+      padding: 8px;
+      border: 1px solid #e4ece8;
+      border-radius: 5px;
+      background: #fff;
+      font-size: 11px;
+      font-weight: 850;
+    }
+
+    .ko-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .match {
+      display: grid;
+      grid-template-columns: 94px minmax(0, 1fr) 54px minmax(0, 1fr) 142px;
+      gap: 10px;
+      align-items: center;
+      min-height: 66px;
+      border-top: 1px solid #edf2ef;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .match:first-child { border-top: 0; }
+
+    .match:hover {
+      background: #fbfdfb;
+    }
+
+    .time {
+      color: #586a61;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .time small {
+      display: block;
+      color: #9aa6a0;
+      font-size: 10px;
+    }
+
+    .live {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--red);
+      font-weight: 900;
+      font-size: 10px;
+    }
+
+    .live::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--red);
+    }
+
+    .team {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      font-weight: 850;
+      font-size: 13px;
+    }
+
+    .team.right {
+      justify-content: flex-end;
+      text-align: right;
+    }
+
+    .flag {
+      width: 24px;
+      height: 24px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      border-radius: 5px;
+      background: var(--mint);
+      border: 1px solid #d5e8df;
+      font-size: 11px;
+      font-weight: 950;
+      color: var(--green);
+    }
+
+    .team-link,
+    .player-link {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px dotted #a8d9b5;
+    }
+
+    .team-link:hover,
+    .player-link:hover {
+      color: var(--green);
+    }
+
+    .team span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .score {
+      text-align: center;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .status {
+      color: #8b9892;
+      font-size: 10px;
+      line-height: 1.55;
+      text-align: right;
+    }
+
+    .match-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 5px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .mini-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      padding: 3px 6px;
+      border: 1px solid #d8eadf;
+      border-radius: 3px;
+      background: #fff;
+      color: var(--green);
+      text-decoration: none;
+      font-size: 10px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .mini-link:hover {
+      background: var(--mint);
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 3px 7px;
+      border-radius: 3px;
+      background: #f0f4f2;
+      color: #62736a;
+      font-weight: 800;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 16px;
+    }
+
+    .group-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      padding: 0 12px 12px;
+    }
+
+    .group-card {
+      border: 1px solid #edf2ef;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .group-card.wide {
+      grid-column: 1 / -1;
+    }
+
+    .group-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 10px;
+      background: #f8faf8;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .group-title small {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .standing {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .standing th {
+      padding: 9px 7px;
+      background: #f7faf8;
+      color: #87948d;
+      font-size: 10px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .standing th:nth-child(2),
+    .standing td:nth-child(2) {
+      text-align: left;
+    }
+
+    .standing td {
+      padding: 8px 6px;
+      border-top: 1px solid #edf2ef;
+      text-align: center;
+    }
+
+    .standing b { font-weight: 900; }
+
+    .qual {
+      display: inline-block;
+      min-width: 34px;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-size: 9px;
+      font-weight: 900;
+    }
+
+    .qual.advance {
+      background: #e7f8ed;
+      color: var(--green);
+    }
+
+    .qual.third {
+      background: #fff7df;
+      color: #a87100;
+    }
+
+    .qual.out {
+      background: #f2f3f2;
+      color: #87948d;
+    }
+
+    .leader-tabs {
+      display: flex;
+      gap: 8px;
+      padding: 0 16px 6px;
+      overflow: auto;
+    }
+
+    .leader-tabs .chip {
+      padding: 6px 2px;
+    }
+
+    .leaders {
+      padding: 0 16px 14px;
+    }
+
+    .leader {
+      display: grid;
+      grid-template-columns: 28px 38px minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      padding: 9px 0;
+      border-top: 1px solid #edf2ef;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .leader:first-child { border-top: 0; }
+
+    .leader:hover .leader-name {
+      color: var(--green);
+    }
+
+    .rank {
+      color: #b2c5bb;
+      font: 900 22px Georgia, serif;
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #0a7555, #9ed4bc);
+      color: #fff;
+      font-weight: 900;
+      overflow: hidden;
+      border: 1px solid #dfe8e3;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .leader-name {
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .leader-team {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .leader-value {
+      color: var(--ink);
+      font: 900 22px Georgia, serif;
+    }
+
+    .leader-block {
+      margin-top: 10px;
+      border-top: 1px solid #edf2ef;
+      padding-top: 12px;
+    }
+
+    .leader-block-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 4px;
+      color: #34433c;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .leader-mini {
+      display: grid;
+      grid-template-columns: 24px minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+      padding: 7px 0;
+      border-top: 1px dashed #edf2ef;
+      font-size: 12px;
+    }
+
+    .leader-mini:first-of-type {
+      border-top: 0;
+    }
+
+    .leader-mini b {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .leader-mini span:last-child {
+      color: var(--green);
+      font-weight: 900;
+    }
+
+    .side-stack {
+      display: grid;
+      gap: 16px;
+    }
+
+    .overview {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .overview div {
+      padding: 14px 16px;
+      border-top: 1px solid #edf2ef;
+    }
+
+    .overview div:nth-child(1),
+    .overview div:nth-child(2) {
+      border-top: 0;
+    }
+
+    .overview div:nth-child(odd) {
+      border-right: 1px solid #edf2ef;
+    }
+
+    .overview b {
+      display: block;
+      color: var(--green);
+      font: 900 25px Georgia, serif;
+    }
+
+    .overview span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .bracket {
+      display: grid;
+      gap: 9px;
+      padding: 0 16px 16px;
+    }
+
+    .bracket-game {
+      padding: 10px;
+      border: 1px solid #e4ece8;
+      border-radius: 10px;
+      background: #fbfdfc;
+    }
+
+    .bracket-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 3px 0;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .detail-preview {
+      padding: 16px;
+    }
+
+    .detail-card {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .detail-top {
+      padding: 16px;
+      background: linear-gradient(110deg, #073f32, #087454);
+      color: #fff;
+    }
+
+    .detail-score {
+      display: grid;
+      grid-template-columns: 1fr 76px 1fr;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 12px;
+      text-align: center;
+    }
+
+    .detail-score b {
+      font: 900 28px Georgia, serif;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      padding: 0 14px 14px;
+    }
+
+    .metric {
+      padding: 10px;
+      border-radius: 10px;
+      background: #f3f8f5;
+      text-align: center;
+    }
+
+    .metric b {
+      display: block;
+      font: 900 18px Georgia, serif;
+      color: var(--green);
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      display: none;
+      padding: 18px;
+      background: rgba(7, 28, 16, .58);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal:target {
+      display: flex;
+    }
+
+    .modal-card {
+      width: min(760px, 100%);
+      max-height: min(84vh, 760px);
+      overflow: auto;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .24);
+    }
+
+    .modal-head {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      background: var(--green);
+      color: #fff;
+    }
+
+    .modal-head b {
+      font-size: 16px;
+    }
+
+    .modal-close {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 900;
+    }
+
+    .modal-body {
+      padding: 14px 16px 18px;
+    }
+
+    .timeline-row,
+    .info-row {
+      display: grid;
+      grid-template-columns: 56px minmax(0, 1fr);
+      gap: 10px;
+      padding: 10px 0;
+      border-top: 1px solid #edf2ef;
+      font-size: 13px;
+    }
+
+    .timeline-row:first-child,
+    .info-row:first-child {
+      border-top: 0;
+    }
+
+    .timeline-row time,
+    .info-row time {
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .bottom-nav {
+      display: none;
+    }
+
+    @media (max-width: 980px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar {
+        height: auto;
+        padding: 10px 12px 0;
+        display: block;
+      }
+      .brand {
+        height: 34px;
+      }
+      .nav {
+        margin: 4px -4px 0;
+      }
+      .nav a {
+        padding: 10px 9px 8px;
+        font-size: 13px;
+      }
+      .content { padding: 16px 14px 84px; }
+      .dashboard { grid-template-columns: 1fr; }
+      .two-col { grid-template-columns: 1fr; }
+      .group-grid { grid-template-columns: 1fr; }
+      .topbar h1 { font-size: 20px; }
+      .hero { min-height: 148px; padding: 16px; }
+      .hero h2 { font-size: 24px; }
+      .headline-grid { grid-template-columns: 1fr; }
+      .watch-grid { grid-template-columns: 1fr; }
+      .side-stack { grid-template-columns: 1fr; }
+      .bottom-nav {
+        position: fixed;
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        z-index: 20;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 4px;
+        padding: 7px;
+        border: 1px solid #dce8e2;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, .96);
+        box-shadow: 0 16px 40px rgba(10, 45, 31, .17);
+        backdrop-filter: blur(12px);
+      }
+      .bottom-nav a {
+        display: grid;
+        place-items: center;
+        gap: 3px;
+        min-width: 0;
+        padding: 6px 2px;
+        border-radius: 12px;
+        color: #708078;
+        text-decoration: none;
+        font-size: 10px;
+        font-weight: 850;
+      }
+      .bottom-nav a.active {
+        background: var(--mint);
+        color: var(--green);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar {
+        align-items: flex-start;
+      }
+      .topbar h1 {
+        font-size: 19px;
+      }
+      .sync {
+        max-width: 142px;
+        white-space: normal;
+        line-height: 1.3;
+      }
+      .hero-stats {
+        gap: 16px;
+      }
+      .focus-news b {
+        font-size: 18px;
+      }
+      .match {
+        grid-template-columns: 50px minmax(0, 1fr) 38px minmax(0, 1fr);
+        gap: 6px;
+        min-height: 92px;
+      }
+      .match-actions {
+        grid-column: 1 / -1;
+        align-items: flex-start;
+        padding: 0 0 8px 56px;
+      }
+      .status { display: none; }
+      .action-row { justify-content: flex-start; }
+      .team { gap: 5px; font-size: 12px; }
+      .flag { width: 24px; height: 24px; font-size: 9px; }
+      .score { font-size: 16px; }
+      .time { font-size: 10px; }
+      .time small { display: none; }
+      .metrics { grid-template-columns: repeat(2, 1fr); }
+      .overview b { font-size: 22px; }
+      .modal { padding: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><span class="logo">26</span><span>世界杯数据中心</span></div>
+      <div class="side-note">PWA 原型 · 亲友打开链接即可用，手机可添加到主屏幕。当前为 UI demo，数据为示意。</div>
+      <nav class="nav">
+        <a class="active" href="#">● 首页</a>
+        <a href="#">赛程比分</a>
+        <a href="#">分组积分</a>
+        <a href="#">淘汰赛</a>
+        <a href="#">球员榜</a>
+        <a href="#">球队</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <header class="topbar">
+        <div>
+          <h1>2026 世界杯 · 比赛日</h1>
+          <div class="section-sub">北京时间显示 · 为手机和 PC 分发优化</div>
+        </div>
+        <div class="sync"><span class="dot"></span>实时数据 · 18:42 已刷新</div>
+      </header>
+
+      <div class="dashboard">
+        <div>
+          <section class="hero">
+            <div class="eyebrow">FIFA WORLD CUP 2026</div>
+            <h2>今天 3 场比赛，1 场正在进行</h2>
+            <p>首页聚合亲友最常看的信息：实时比分、下一场开球、积分变化、射手榜和关键比赛入口。失败时自动切换到缓存或内置快照。</p>
+            <div class="hero-stats">
+              <div class="hero-stat"><b>104</b><span>总比赛</span></div>
+              <div class="hero-stat"><b>48</b><span>参赛队</span></div>
+              <div class="hero-stat"><b>16</b><span>举办城市</span></div>
+              <div class="hero-stat"><b>7/19</b><span>决赛日</span></div>
+            </div>
+          </section>
+
+          <section class="headline-grid" aria-label="世界杯焦点">
+            <article class="focus-news">
+              <b>巴西 2-1 暂时领先德国，维尼修斯边路连续制造威胁</b>
+              <span>实时战报 · 关键事件 · 技术统计同步更新</span>
+            </article>
+            <div class="news-list">
+              <a class="news-item" href="https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026" target="_blank" rel="noopener noreferrer">法国今晚迎战墨西哥，姆巴佩预计首发出场<span class="link-mark">外链</span><small>赛前情报 · FIFA 专题</small></a>
+              <a class="news-item" href="https://www.espn.com/soccer/league/_/name/fifa.world" target="_blank" rel="noopener noreferrer">阿根廷 3-0 完胜日本，梅西传射建功<span class="link-mark">外链</span><small>战报 · ESPN 世界杯</small></a>
+              <a class="news-item" href="https://worldcup.cctv.com/" target="_blank" rel="noopener noreferrer">淘汰赛席位形势：A 组前两名基本明朗<span class="link-mark">外链</span><small>积分解读 · 央视世界杯</small></a>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-head">
+              <div>
+                <div class="section-title">世界杯快讯</div>
+                <div class="section-sub">可接入官方新闻、媒体报道，或你手动维护的亲友精选链接</div>
+              </div>
+              <span class="pill">新闻链接</span>
+            </div>
+            <div class="news-module">
+              <a class="news-row" href="https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/news" target="_blank" rel="noopener noreferrer">
+                <span><b>官方动态：2026 世界杯赛程、场馆和球队资讯</b><small>打开 FIFA 官方新闻页，不在 App 内复制全文</small></span>
+                <span class="source-tag">FIFA</span>
+              </a>
+              <a class="news-row" href="https://www.espn.com/soccer/league/_/name/fifa.world" target="_blank" rel="noopener noreferrer">
+                <span><b>媒体报道：比赛战报、伤停、赛前预测与技术分析</b><small>作为外部阅读入口，App 只保存标题、来源和链接</small></span>
+                <span class="source-tag">ESPN</span>
+              </a>
+              <a class="news-row" href="https://worldcup.cctv.com/" target="_blank" rel="noopener noreferrer">
+                <span><b>中文入口：央视世界杯专题与视频集锦</b><small>适合给亲友补充中文报道和视频入口</small></span>
+                <span class="source-tag">CCTV</span>
+              </a>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-head">
+              <div>
+                <div class="section-title">赛程与比分</div>
+                <div class="section-sub">默认显示今日与最近比赛，可按阶段筛选</div>
+              </div>
+              <span class="pill">3 场</span>
+            </div>
+            <div class="filters">
+              <button class="chip active">今日</button>
+              <button class="chip">小组赛</button>
+              <button class="chip">淘汰赛对阵图</button>
+              <button class="chip">16 强</button>
+              <button class="chip">半决赛</button>
+              <button class="chip">决赛</button>
+            </div>
+            <div class="match-list">
+              <a class="match" href="#match-bra-ger" aria-label="查看巴西对德国赛况">
+                <div class="time"><span class="live">LIVE</span><small>MetLife Stadium</small></div>
+                <div class="team"><span class="flag">🇧🇷</span><span class="team-link">巴西</span></div>
+                <div class="score">2-1</div>
+                <div class="team right"><span class="team-link">德国</span><span class="flag">🇩🇪</span></div>
+                <div class="match-actions">
+                  <div class="status"><span class="pill">小组赛</span> 68' 进行中</div>
+                  <div class="action-row">
+                    <object><a class="mini-link" href="https://www.tdm.com.mo/zh-hant/live?Channel=6&type=tv" target="_blank" rel="noopener noreferrer">澳视直播</a></object>
+                    <object><a class="mini-link" href="https://worldcup.cctv.com/" target="_blank" rel="noopener noreferrer">央视频</a></object>
+                  </div>
+                </div>
+              </a>
+              <a class="match" href="#match-mex-fra" aria-label="查看墨西哥对法国赛况">
+                <div class="time">23:00<small>Azteca</small></div>
+                <div class="team"><span class="flag">🇲🇽</span><span class="team-link">墨西哥</span></div>
+                <div class="score">-</div>
+                <div class="team right"><span class="team-link">法国</span><span class="flag">🇫🇷</span></div>
+                <div class="match-actions">
+                  <div class="status"><span class="pill">小组赛</span> 未开始</div>
+                  <div class="action-row">
+                    <object><a class="mini-link" href="https://www.tdm.com.mo/zh-hant/live?Channel=6&type=tv" target="_blank" rel="noopener noreferrer">澳视直播</a></object>
+                    <object><a class="mini-link" href="https://worldcup.cctv.com/" target="_blank" rel="noopener noreferrer">央视频</a></object>
+                  </div>
+                </div>
+              </a>
+              <a class="match" href="#match-arg-jpn" aria-label="查看阿根廷对日本赛况">
+                <div class="time">02:00<small>BC Place</small></div>
+                <div class="team"><span class="flag">🇦🇷</span><span class="team-link">阿根廷</span></div>
+                <div class="score">3-0</div>
+                <div class="team right"><span class="team-link">日本</span><span class="flag">🇯🇵</span></div>
+                <div class="match-actions">
+                  <div class="status"><span class="pill">小组赛</span> 已结束</div>
+                  <div class="action-row">
+                    <object><a class="mini-link" href="https://www.youtube.com/@fifa" target="_blank" rel="noopener noreferrer">FIFA集锦</a></object>
+                    <object><a class="mini-link" href="https://worldcup.cctv.com/" target="_blank" rel="noopener noreferrer">央视频集锦</a></object>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div class="knockout-strip">
+              <div class="knockout-title">
+                <span>淘汰赛对阵图预览</span>
+                <span class="source-tag">32 强起</span>
+              </div>
+              <div class="knockout-grid">
+                <div class="ko-col">
+                  <h4>32 强</h4>
+                  <div class="ko-game">
+                    <div class="ko-line"><span>🇲🇽 A1 墨西哥</span><b>vs</b></div>
+                    <div class="ko-line"><span>🇲🇦 第三名 8</span><b>7/3</b></div>
+                  </div>
+                </div>
+                <div class="ko-col">
+                  <h4>16 强</h4>
+                  <div class="ko-game">
+                    <div class="ko-line"><span>胜者 1</span><b>vs</b></div>
+                    <div class="ko-line"><span>胜者 2</span><b>7/7</b></div>
+                  </div>
+                </div>
+                <div class="ko-col">
+                  <h4>半决赛</h4>
+                  <div class="ko-game">
+                    <div class="ko-line"><span>上半区胜者</span><b>vs</b></div>
+                    <div class="ko-line"><span>下半区胜者</span><b>7/14</b></div>
+                  </div>
+                </div>
+                <div class="ko-col">
+                  <h4>决赛</h4>
+                  <div class="ko-game">
+                    <div class="ko-line"><span>半决赛胜者</span><b>vs</b></div>
+                    <div class="ko-line"><span>半决赛胜者</span><b>7/19</b></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <div class="two-col">
+            <section class="section">
+              <div class="section-head">
+                <div>
+                  <div class="section-title">分组积分</div>
+                  <div class="section-sub">每个小组单独展示；前二直接晋级，部分第三名待比较</div>
+                </div>
+                <span class="pill">全部小组</span>
+              </div>
+              <div class="group-grid">
+                <div class="group-card">
+                  <div class="group-title">A 组 <small>前二晋级</small></div>
+                  <table class="standing">
+                    <thead><tr><th>#</th><th>球队</th><th>赛</th><th>净</th><th>分</th><th>状态</th></tr></thead>
+                    <tbody>
+                      <tr><td>1</td><td><b><a class="team-link" href="#team-mex">🇲🇽 墨西哥</a></b></td><td>2</td><td>+4</td><td><b>6</b></td><td><span class="qual advance">晋级区</span></td></tr>
+                      <tr><td>2</td><td><b><a class="team-link" href="#team-kor">🇰🇷 韩国</a></b></td><td>2</td><td>+1</td><td><b>4</b></td><td><span class="qual advance">晋级区</span></td></tr>
+                      <tr><td>3</td><td>🇿🇦 南非</td><td>2</td><td>-2</td><td>1</td><td><span class="qual third">待比较</span></td></tr>
+                      <tr><td>4</td><td>🇨🇿 捷克</td><td>2</td><td>-3</td><td>0</td><td><span class="qual out">出局区</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="group-card">
+                  <div class="group-title">B 组 <small>示例</small></div>
+                  <table class="standing">
+                    <thead><tr><th>#</th><th>球队</th><th>赛</th><th>净</th><th>分</th><th>状态</th></tr></thead>
+                    <tbody>
+                      <tr><td>1</td><td><b><a class="team-link" href="#team-bra">🇧🇷 巴西</a></b></td><td>2</td><td>+3</td><td><b>6</b></td><td><span class="qual advance">晋级区</span></td></tr>
+                      <tr><td>2</td><td><b>🇩🇪 德国</b></td><td>2</td><td>+2</td><td><b>4</b></td><td><span class="qual advance">晋级区</span></td></tr>
+                      <tr><td>3</td><td>🇯🇵 日本</td><td>2</td><td>-1</td><td>3</td><td><span class="qual third">待比较</span></td></tr>
+                      <tr><td>4</td><td>🇨🇦 加拿大</td><td>2</td><td>-4</td><td>0</td><td><span class="qual out">出局区</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="group-card">
+                  <div class="group-title">C 组 <small>示例</small></div>
+                  <table class="standing">
+                    <thead><tr><th>#</th><th>球队</th><th>赛</th><th>净</th><th>分</th><th>状态</th></tr></thead>
+                    <tbody>
+                      <tr><td>1</td><td><b><a class="team-link" href="#team-arg">🇦🇷 阿根廷</a></b></td><td>2</td><td>+5</td><td><b>6</b></td><td><span class="qual advance">晋级区</span></td></tr>
+                      <tr><td>2</td><td><b>🇫🇷 法国</b></td><td>2</td><td>+1</td><td><b>4</b></td><td><span class="qual advance">晋级区</span></td></tr>
+                      <tr><td>3</td><td>🇺🇸 美国</td><td>2</td><td>0</td><td>2</td><td><span class="qual third">待比较</span></td></tr>
+                      <tr><td>4</td><td>🇳🇬 尼日利亚</td><td>2</td><td>-6</td><td>0</td><td><span class="qual out">出局区</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="group-card">
+                  <div class="group-title">D 组 <small>示例</small></div>
+                  <table class="standing">
+                    <thead><tr><th>#</th><th>球队</th><th>赛</th><th>净</th><th>分</th><th>状态</th></tr></thead>
+                    <tbody>
+                      <tr><td>1</td><td><b>🇪🇸 西班牙</b></td><td>2</td><td>+4</td><td><b>6</b></td><td><span class="qual advance">晋级区</span></td></tr>
+                      <tr><td>2</td><td><b>🇺🇾 乌拉圭</b></td><td>2</td><td>+2</td><td><b>4</b></td><td><span class="qual advance">晋级区</span></td></tr>
+                      <tr><td>3</td><td>🇲🇦 摩洛哥</td><td>2</td><td>-1</td><td>3</td><td><span class="qual third">待比较</span></td></tr>
+                      <tr><td>4</td><td>🇦🇺 澳大利亚</td><td>2</td><td>-5</td><td>0</td><td><span class="qual out">出局区</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="group-card">
+                  <div class="group-title">E 组 <small>示例</small></div>
+                  <table class="standing">
+                    <thead><tr><th>#</th><th>球队</th><th>赛</th><th>净</th><th>分</th><th>状态</th></tr></thead>
+                    <tbody>
+                      <tr><td>1</td><td><b>🇵🇹 葡萄牙</b></td><td>2</td><td>+3</td><td><b>6</b></td><td><span class="qual advance">晋级区</span></td></tr>
+                      <tr><td>2</td><td><b>🇸🇳 塞内加尔</b></td><td>2</td><td>+1</td><td><b>4</b></td><td><span class="qual advance">晋级区</span></td></tr>
+                      <tr><td>3</td><td>🇨🇭 瑞士</td><td>2</td><td>0</td><td>3</td><td><span class="qual third">第3比较</span></td></tr>
+                      <tr><td>4</td><td>🇸🇦 沙特</td><td>2</td><td>-4</td><td>0</td><td><span class="qual out">出局区</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="group-card">
+                  <div class="group-title">F 组 <small>示例</small></div>
+                  <table class="standing">
+                    <thead><tr><th>#</th><th>球队</th><th>赛</th><th>净</th><th>分</th><th>状态</th></tr></thead>
+                    <tbody>
+                      <tr><td>1</td><td><b>🇳🇱 荷兰</b></td><td>2</td><td>+4</td><td><b>6</b></td><td><span class="qual advance">晋级区</span></td></tr>
+                      <tr><td>2</td><td><b>🇨🇴 哥伦比亚</b></td><td>2</td><td>+1</td><td><b>4</b></td><td><span class="qual advance">晋级区</span></td></tr>
+                      <tr><td>3</td><td>🇭🇷 克罗地亚</td><td>2</td><td>0</td><td>2</td><td><span class="qual third">第3比较</span></td></tr>
+                      <tr><td>4</td><td>🇹🇳 突尼斯</td><td>2</td><td>-5</td><td>0</td><td><span class="qual out">出局区</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="group-card">
+                  <div class="group-title">G 组 <small>示例</small></div>
+                  <table class="standing">
+                    <thead><tr><th>#</th><th>球队</th><th>赛</th><th>净</th><th>分</th><th>状态</th></tr></thead>
+                    <tbody>
+                      <tr><td>1</td><td><b>🇧🇪 比利时</b></td><td>2</td><td>+2</td><td><b>6</b></td><td><span class="qual advance">晋级区</span></td></tr>
+                      <tr><td>2</td><td><b>🇪🇨 厄瓜多尔</b></td><td>2</td><td>+1</td><td><b>4</b></td><td><span class="qual advance">晋级区</span></td></tr>
+                      <tr><td>3</td><td>🇨🇲 喀麦隆</td><td>2</td><td>-1</td><td>3</td><td><span class="qual third">第3比较</span></td></tr>
+                      <tr><td>4</td><td>🇶🇦 卡塔尔</td><td>2</td><td>-2</td><td>1</td><td><span class="qual out">出局区</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="group-card">
+                  <div class="group-title">H 组 <small>示例</small></div>
+                  <table class="standing">
+                    <thead><tr><th>#</th><th>球队</th><th>赛</th><th>净</th><th>分</th><th>状态</th></tr></thead>
+                    <tbody>
+                      <tr><td>1</td><td><b>🇮🇹 意大利</b></td><td>2</td><td>+3</td><td><b>6</b></td><td><span class="qual advance">晋级区</span></td></tr>
+                      <tr><td>2</td><td><b>🇩🇰 丹麦</b></td><td>2</td><td>+1</td><td><b>4</b></td><td><span class="qual advance">晋级区</span></td></tr>
+                      <tr><td>3</td><td>🇵🇱 波兰</td><td>2</td><td>-1</td><td>3</td><td><span class="qual third">第3比较</span></td></tr>
+                      <tr><td>4</td><td>🇨🇷 哥斯达黎加</td><td>2</td><td>-3</td><td>0</td><td><span class="qual out">出局区</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="group-card">
+                  <div class="group-title">I 组 <small>示例</small></div>
+                  <table class="standing">
+                    <thead><tr><th>#</th><th>球队</th><th>赛</th><th>净</th><th>分</th><th>状态</th></tr></thead>
+                    <tbody>
+                      <tr><td>1</td><td><b>🇨🇱 智利</b></td><td>2</td><td>+2</td><td><b>6</b></td><td><span class="qual advance">晋级区</span></td></tr>
+                      <tr><td>2</td><td><b>🇷🇸 塞尔维亚</b></td><td>2</td><td>+1</td><td><b>4</b></td><td><span class="qual advance">晋级区</span></td></tr>
+                      <tr><td>3</td><td>🇬🇭 加纳</td><td>2</td><td>0</td><td>2</td><td><span class="qual third">第3比较</span></td></tr>
+                      <tr><td>4</td><td>🇳🇿 新西兰</td><td>2</td><td>-3</td><td>1</td><td><span class="qual out">出局区</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="group-card">
+                  <div class="group-title">J 组 <small>示例</small></div>
+                  <table class="standing">
+                    <thead><tr><th>#</th><th>球队</th><th>赛</th><th>净</th><th>分</th><th>状态</th></tr></thead>
+                    <tbody>
+                      <tr><td>1</td><td><b>🇹🇷 土耳其</b></td><td>2</td><td>+3</td><td><b>6</b></td><td><span class="qual advance">晋级区</span></td></tr>
+                      <tr><td>2</td><td><b>🇪🇬 埃及</b></td><td>2</td><td>+1</td><td><b>4</b></td><td><span class="qual advance">晋级区</span></td></tr>
+                      <tr><td>3</td><td>🇺🇦 乌克兰</td><td>2</td><td>0</td><td>3</td><td><span class="qual third">第3比较</span></td></tr>
+                      <tr><td>4</td><td>🇵🇦 巴拿马</td><td>2</td><td>-4</td><td>0</td><td><span class="qual out">出局区</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="group-card">
+                  <div class="group-title">K 组 <small>示例</small></div>
+                  <table class="standing">
+                    <thead><tr><th>#</th><th>球队</th><th>赛</th><th>净</th><th>分</th><th>状态</th></tr></thead>
+                    <tbody>
+                      <tr><td>1</td><td><b>🇦🇹 奥地利</b></td><td>2</td><td>+2</td><td><b>5</b></td><td><span class="qual advance">晋级区</span></td></tr>
+                      <tr><td>2</td><td><b>🇮🇷 伊朗</b></td><td>2</td><td>+1</td><td><b>4</b></td><td><span class="qual advance">晋级区</span></td></tr>
+                      <tr><td>3</td><td>🇵🇾 巴拉圭</td><td>2</td><td>0</td><td>3</td><td><span class="qual third">第3比较</span></td></tr>
+                      <tr><td>4</td><td>🇯🇲 牙买加</td><td>2</td><td>-3</td><td>1</td><td><span class="qual out">出局区</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="group-card">
+                  <div class="group-title">L 组 <small>示例</small></div>
+                  <table class="standing">
+                    <thead><tr><th>#</th><th>球队</th><th>赛</th><th>净</th><th>分</th><th>状态</th></tr></thead>
+                    <tbody>
+                      <tr><td>1</td><td><b>🇸🇪 瑞典</b></td><td>2</td><td>+2</td><td><b>5</b></td><td><span class="qual advance">晋级区</span></td></tr>
+                      <tr><td>2</td><td><b>🇵🇪 秘鲁</b></td><td>2</td><td>+1</td><td><b>4</b></td><td><span class="qual advance">晋级区</span></td></tr>
+                      <tr><td>3</td><td>🇨🇮 科特迪瓦</td><td>2</td><td>0</td><td>3</td><td><span class="qual third">第3比较</span></td></tr>
+                      <tr><td>4</td><td>🇨🇳 中国</td><td>2</td><td>-3</td><td>1</td><td><span class="qual out">出局区</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="group-card wide">
+                  <div class="group-title">小组第三名排名 <small>12 队比较，前 8 晋级 32 强</small></div>
+                  <table class="standing">
+                    <thead><tr><th>#</th><th>球队</th><th>组</th><th>分</th><th>净</th><th>状态</th></tr></thead>
+                    <tbody>
+                      <tr><td>1</td><td>🇯🇵 日本</td><td>B</td><td><b>3</b></td><td>-1</td><td><span class="qual advance">晋级</span></td></tr>
+                      <tr><td>2</td><td>🇨🇭 瑞士</td><td>E</td><td><b>3</b></td><td>0</td><td><span class="qual advance">晋级</span></td></tr>
+                      <tr><td>3</td><td>🇨🇲 喀麦隆</td><td>G</td><td><b>3</b></td><td>-1</td><td><span class="qual advance">晋级</span></td></tr>
+                      <tr><td>4</td><td>🇵🇱 波兰</td><td>H</td><td><b>3</b></td><td>-1</td><td><span class="qual advance">晋级</span></td></tr>
+                      <tr><td>5</td><td>🇺🇦 乌克兰</td><td>J</td><td><b>3</b></td><td>0</td><td><span class="qual advance">晋级</span></td></tr>
+                      <tr><td>6</td><td>🇵🇾 巴拉圭</td><td>K</td><td><b>3</b></td><td>0</td><td><span class="qual advance">晋级</span></td></tr>
+                      <tr><td>7</td><td>🇨🇮 科特迪瓦</td><td>L</td><td><b>3</b></td><td>0</td><td><span class="qual advance">晋级</span></td></tr>
+                      <tr><td>8</td><td>🇲🇦 摩洛哥</td><td>D</td><td><b>3</b></td><td>-1</td><td><span class="qual advance">晋级</span></td></tr>
+                      <tr><td>9</td><td>🇺🇸 美国</td><td>C</td><td>2</td><td>0</td><td><span class="qual out">淘汰线</span></td></tr>
+                      <tr><td>10</td><td>🇭🇷 克罗地亚</td><td>F</td><td>2</td><td>0</td><td><span class="qual out">淘汰线</span></td></tr>
+                      <tr><td>11</td><td>🇬🇭 加纳</td><td>I</td><td>2</td><td>0</td><td><span class="qual out">淘汰线</span></td></tr>
+                      <tr><td>12</td><td>🇿🇦 南非</td><td>A</td><td>1</td><td>-2</td><td><span class="qual out">淘汰线</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <section class="section">
+              <div class="section-head">
+                <div>
+                  <div class="section-title">球员榜</div>
+                  <div class="section-sub">射手、助攻、关键数据可切换</div>
+                </div>
+                <span class="pill">可切换</span>
+              </div>
+              <div class="leader-tabs">
+                <button class="chip active">射手榜</button>
+                <button class="chip">助攻榜</button>
+                <button class="chip">扑救榜</button>
+                <button class="chip">黄牌榜</button>
+              </div>
+              <div class="leaders">
+                <a class="leader" href="#player-mbappe"><div class="rank">1</div><div class="avatar"><img src="https://a.espncdn.com/i/headshots/soccer/players/full/231388.png" alt="姆巴佩头像"></div><div><div class="leader-name">姆巴佩</div><div class="leader-team">🇫🇷 法国 · 前锋</div></div><div class="leader-value">5</div></a>
+                <a class="leader" href="#player-vini"><div class="rank">2</div><div class="avatar"><img src="https://a.espncdn.com/i/headshots/soccer/players/full/252107.png" alt="维尼修斯头像"></div><div><div class="leader-name">维尼修斯</div><div class="leader-team">🇧🇷 巴西 · 边锋</div></div><div class="leader-value">4</div></a>
+                <a class="leader" href="#player-messi"><div class="rank">3</div><div class="avatar"><img src="https://a.espncdn.com/i/headshots/soccer/players/full/45843.png" alt="梅西头像"></div><div><div class="leader-name">梅西</div><div class="leader-team">🇦🇷 阿根廷 · 前锋</div></div><div class="leader-value">3</div></a>
+                <a class="leader" href="#player-assist"><div class="rank">4</div><div class="avatar">B</div><div><div class="leader-name">布鲁诺·费尔南德斯</div><div class="leader-team">🇵🇹 葡萄牙 · 中场</div></div><div class="leader-value">3</div></a>
+                <a class="leader" href="#player-mbappe"><div class="rank">5</div><div class="avatar">凯</div><div><div class="leader-name">哈里·凯恩</div><div class="leader-team">🏴 英格兰 · 前锋</div></div><div class="leader-value">3</div></a>
+                <a class="leader" href="#player-vini"><div class="rank">6</div><div class="avatar">劳</div><div><div class="leader-name">劳塔罗</div><div class="leader-team">🇦🇷 阿根廷 · 前锋</div></div><div class="leader-value">2</div></a>
+                <a class="leader" href="#player-mbappe"><div class="rank">7</div><div class="avatar">哈</div><div><div class="leader-name">哈兰德</div><div class="leader-team">🇳🇴 挪威 · 前锋</div></div><div class="leader-value">2</div></a>
+                <a class="leader" href="#player-vini"><div class="rank">8</div><div class="avatar">贝</div><div><div class="leader-name">贝林厄姆</div><div class="leader-team">🏴 英格兰 · 中场</div></div><div class="leader-value">2</div></a>
+                <a class="leader" href="#player-messi"><div class="rank">9</div><div class="avatar">罗</div><div><div class="leader-name">罗德里戈</div><div class="leader-team">🇧🇷 巴西 · 前锋</div></div><div class="leader-value">2</div></a>
+                <a class="leader" href="#player-assist"><div class="rank">10</div><div class="avatar">萨</div><div><div class="leader-name">萨拉赫</div><div class="leader-team">🇪🇬 埃及 · 前锋</div></div><div class="leader-value">2</div></a>
+                <a class="leader" href="#player-mbappe"><div class="rank">11</div><div class="avatar">孙</div><div><div class="leader-name">孙兴慜</div><div class="leader-team">🇰🇷 韩国 · 前锋</div></div><div class="leader-value">2</div></a>
+                <a class="leader" href="#player-vini"><div class="rank">12</div><div class="avatar">莱</div><div><div class="leader-name">莱万多夫斯基</div><div class="leader-team">🇵🇱 波兰 · 前锋</div></div><div class="leader-value">2</div></a>
+                <a class="leader" href="#player-messi"><div class="rank">13</div><div class="avatar">亚</div><div><div class="leader-name">亚马尔</div><div class="leader-team">🇪🇸 西班牙 · 边锋</div></div><div class="leader-value">1</div></a>
+                <a class="leader" href="#player-assist"><div class="rank">14</div><div class="avatar">佩</div><div><div class="leader-name">佩德里</div><div class="leader-team">🇪🇸 西班牙 · 中场</div></div><div class="leader-value">1</div></a>
+                <a class="leader" href="#player-mbappe"><div class="rank">15</div><div class="avatar">格</div><div><div class="leader-name">格列兹曼</div><div class="leader-team">🇫🇷 法国 · 前场</div></div><div class="leader-value">1</div></a>
+                <a class="leader" href="#player-vini"><div class="rank">16</div><div class="avatar">穆</div><div><div class="leader-name">穆西亚拉</div><div class="leader-team">🇩🇪 德国 · 中场</div></div><div class="leader-value">1</div></a>
+                <a class="leader" href="#player-messi"><div class="rank">17</div><div class="avatar">三</div><div><div class="leader-name">三笘薰</div><div class="leader-team">🇯🇵 日本 · 边锋</div></div><div class="leader-value">1</div></a>
+                <a class="leader" href="#player-assist"><div class="rank">18</div><div class="avatar">戴</div><div><div class="leader-name">戴维</div><div class="leader-team">🇨🇦 加拿大 · 前锋</div></div><div class="leader-value">1</div></a>
+                <a class="leader" href="#player-mbappe"><div class="rank">19</div><div class="avatar">努</div><div><div class="leader-name">努涅斯</div><div class="leader-team">🇺🇾 乌拉圭 · 前锋</div></div><div class="leader-value">1</div></a>
+                <a class="leader" href="#player-vini"><div class="rank">20</div><div class="avatar">奥</div><div><div class="leader-name">奥斯梅恩</div><div class="leader-team">🇳🇬 尼日利亚 · 前锋</div></div><div class="leader-value">1</div></a>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <aside class="side-stack">
+          <section class="section">
+            <div class="section-head">
+              <div>
+                <div class="section-title">赛事概览</div>
+                <div class="section-sub">亲友快速读懂当前进度</div>
+              </div>
+            </div>
+            <div class="overview">
+              <div><b>32</b><span>已赛</span></div>
+              <div><b>72</b><span>待赛</span></div>
+              <div><b>91</b><span>总进球</span></div>
+              <div><b>2.84</b><span>场均进球</span></div>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-head">
+              <div>
+                <div class="section-title">淘汰赛预览</div>
+                <div class="section-sub">从 16 强开始自动填充</div>
+              </div>
+            </div>
+            <div class="bracket">
+              <div class="bracket-game">
+                <div class="bracket-line"><span>A1 墨西哥</span><b>vs</b></div>
+                <div class="bracket-line"><span>B2 加拿大</span><b>7/3</b></div>
+              </div>
+              <div class="bracket-game">
+                <div class="bracket-line"><span>C1 巴西</span><b>vs</b></div>
+                <div class="bracket-line"><span>D2 日本</span><b>7/4</b></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-head">
+              <div>
+                <div class="section-title">比赛详情弹窗样式</div>
+                <div class="section-sub">点击比赛卡片后展示</div>
+              </div>
+            </div>
+            <div class="detail-preview">
+              <div class="detail-card">
+                <div class="detail-top">
+                  <strong>巴西 vs 德国</strong>
+                  <div class="section-sub" style="color:#cfeadd">小组赛 · 68' · MetLife Stadium</div>
+                </div>
+                <div class="detail-score">
+                  <div><span class="flag">BRA</span><br><strong>巴西</strong></div>
+                  <b>2-1</b>
+                  <div><span class="flag">GER</span><br><strong>德国</strong></div>
+                </div>
+                <div class="metrics">
+                  <div class="metric"><b>58%</b><span>控球</span></div>
+                  <div class="metric"><b>11</b><span>射门</span></div>
+                  <div class="metric"><b>6</b><span>射正</span></div>
+                  <div class="metric"><b>4</b><span>角球</span></div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="active" href="#">首页</a>
+    <a href="#">赛程</a>
+    <a href="#">积分</a>
+    <a href="#">淘汰赛</a>
+    <a href="#">球员</a>
+  </nav>
+
+  <section id="match-bra-ger" class="modal" aria-label="巴西对德国赛况">
+    <div class="modal-card">
+      <div class="modal-head"><b>🇧🇷 巴西 2-1 德国 🇩🇪</b><a class="modal-close" href="#">关闭</a></div>
+      <div class="modal-body">
+        <div class="detail-tabs">
+          <span class="active">赛况</span>
+          <span>阵容</span>
+          <span>数据</span>
+          <span>集锦</span>
+          <span>新闻</span>
+        </div>
+        <div class="detail-score">
+          <div><span class="flag">🇧🇷</span><br><strong><a class="team-link" href="#team-bra">巴西</a></strong></div>
+          <b>2-1</b>
+          <div><span class="flag">🇩🇪</span><br><strong>德国</strong></div>
+        </div>
+        <div class="metrics">
+          <div class="metric"><b>58%</b><span>控球</span></div>
+          <div class="metric"><b>11</b><span>射门</span></div>
+          <div class="metric"><b>6</b><span>射正</span></div>
+          <div class="metric"><b>4</b><span>角球</span></div>
+        </div>
+        <div class="section-title">关键事件</div>
+        <div class="timeline-row"><time>18'</time><span>🇧🇷 <a class="player-link" href="#player-vini">维尼修斯</a> 左路突破后助攻队友破门</span></div>
+        <div class="timeline-row"><time>44'</time><span>🇩🇪 德国扳平比分，禁区前沿远射得手</span></div>
+        <div class="timeline-row"><time>61'</time><span>🇧🇷 巴西反击再下一城，目前 2-1 领先</span></div>
+        <div class="section-title" style="margin-top:14px">观看入口</div>
+        <div class="watch-grid" style="padding:10px 0 0">
+          <a class="watch-link" href="https://www.tdm.com.mo/zh-hant/live?Channel=6&type=tv" target="_blank" rel="noopener noreferrer">澳视体育直播<small>港澳观众可选</small></a>
+          <a class="watch-link" href="https://worldcup.cctv.com/" target="_blank" rel="noopener noreferrer">央视频直播<small>内地观众可选</small></a>
+          <a class="watch-link" href="https://www.youtube.com/@fifa" target="_blank" rel="noopener noreferrer">FIFA 官方集锦<small>正式版优先匹配具体比赛视频</small></a>
+          <a class="watch-link" href="https://worldcup.cctv.com/" target="_blank" rel="noopener noreferrer">央视频中文集锦<small>中文视频入口</small></a>
+        </div>
+        <div class="section-sub">直播和集锦以当地版权可用性为准；正式版有具体场次链接时优先显示具体视频。</div>
+        <div class="section-sub">正式版点击比赛会展示实时事件、技术统计、阵容、集锦链接和相关新闻。</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="match-mex-fra" class="modal" aria-label="墨西哥对法国赛前信息">
+    <div class="modal-card">
+      <div class="modal-head"><b>🇲🇽 墨西哥 vs 法国 🇫🇷</b><a class="modal-close" href="#">关闭</a></div>
+      <div class="modal-body">
+        <div class="detail-tabs">
+          <span class="active">赛前</span>
+          <span>阵容</span>
+          <span>数据</span>
+          <span>直播</span>
+          <span>新闻</span>
+        </div>
+        <div class="info-row"><time>开球</time><span>北京时间 23:00 · Azteca</span></div>
+        <div class="info-row"><time>看点</time><span>法国锋线状态、墨西哥主场氛围、小组第一争夺。</span></div>
+        <div class="info-row"><time>球员</time><span><a class="player-link" href="#player-mbappe">姆巴佩</a> 预计首发；正式版读取阵容接口后更新。</span></div>
+        <div class="info-row"><time>直播</time><span><a class="player-link" href="https://www.tdm.com.mo/zh-hant/live?Channel=6&type=tv" target="_blank" rel="noopener noreferrer">澳视体育</a> / <a class="player-link" href="https://worldcup.cctv.com/" target="_blank" rel="noopener noreferrer">央视频</a></span></div>
+        <div class="section-sub">直播以当地版权可用性为准。</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="match-arg-jpn" class="modal" aria-label="阿根廷对日本赛况">
+    <div class="modal-card">
+      <div class="modal-head"><b>🇦🇷 阿根廷 3-0 日本 🇯🇵</b><a class="modal-close" href="#">关闭</a></div>
+      <div class="modal-body">
+        <div class="detail-tabs">
+          <span class="active">赛况</span>
+          <span>阵容</span>
+          <span>数据</span>
+          <span>集锦</span>
+          <span>新闻</span>
+        </div>
+        <div class="timeline-row"><time>12'</time><span>🇦🇷 <a class="player-link" href="#player-messi">梅西</a> 任意球制造威胁</span></div>
+        <div class="timeline-row"><time>36'</time><span>🇦🇷 阿根廷首开纪录</span></div>
+        <div class="timeline-row"><time>79'</time><span>🇦🇷 反击锁定比分，3-0 完赛</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="team-bra" class="modal" aria-label="巴西队信息">
+    <div class="modal-card">
+      <div class="modal-head"><b>🇧🇷 巴西队</b><a class="modal-close" href="#">关闭</a></div>
+      <div class="modal-body">
+        <div class="metrics">
+          <div class="metric"><b>2</b><span>比赛</span></div>
+          <div class="metric"><b>2</b><span>胜场</span></div>
+          <div class="metric"><b>+3</b><span>净胜球</span></div>
+          <div class="metric"><b>6</b><span>积分</span></div>
+        </div>
+        <div class="info-row"><time>晋级</time><span><span class="qual advance">晋级区</span> B 组第 1，基本锁定淘汰赛席位。</span></div>
+        <div class="info-row"><time>核心</time><span><a class="player-link" href="#player-vini">维尼修斯</a> · 罗德里戈 · 阿利松</span></div>
+        <div class="info-row"><time>赛程</time><span>下一场：对阵加拿大 · 7/1 02:00</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="team-mex" class="modal" aria-label="墨西哥队信息">
+    <div class="modal-card">
+      <div class="modal-head"><b>🇲🇽 墨西哥队</b><a class="modal-close" href="#">关闭</a></div>
+      <div class="modal-body">
+        <div class="info-row"><time>排名</time><span>A 组第 1 · 6 分 · <span class="qual advance">晋级区</span></span></div>
+        <div class="info-row"><time>赛程</time><span>今晚 23:00 对阵法国，争夺小组头名。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="team-kor" class="modal" aria-label="韩国队信息">
+    <div class="modal-card">
+      <div class="modal-head"><b>🇰🇷 韩国队</b><a class="modal-close" href="#">关闭</a></div>
+      <div class="modal-body">
+        <div class="info-row"><time>排名</time><span>A 组第 2 · 4 分 · <span class="qual advance">晋级区</span></span></div>
+        <div class="info-row"><time>说明</time><span>正式版球队页会展示球队赛程、球员名单、技术统计和相关新闻。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="team-arg" class="modal" aria-label="阿根廷队信息">
+    <div class="modal-card">
+      <div class="modal-head"><b>🇦🇷 阿根廷队</b><a class="modal-close" href="#">关闭</a></div>
+      <div class="modal-body">
+        <div class="info-row"><time>排名</time><span>C 组第 1 · 6 分 · <span class="qual advance">晋级区</span></span></div>
+        <div class="info-row"><time>核心</time><span><a class="player-link" href="#player-messi">梅西</a> · 劳塔罗 · 恩佐</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="player-mbappe" class="modal" aria-label="姆巴佩信息">
+    <div class="modal-card">
+      <div class="modal-head"><b>姆巴佩 · 🇫🇷 法国</b><a class="modal-close" href="#">关闭</a></div>
+      <div class="modal-body">
+        <div class="metrics">
+          <div class="metric"><b>5</b><span>进球</span></div>
+          <div class="metric"><b>1</b><span>助攻</span></div>
+          <div class="metric"><b>14</b><span>射门</span></div>
+          <div class="metric"><b>3</b><span>出场</span></div>
+        </div>
+        <div class="info-row"><time>资料</time><span>位置：前锋 · 头像、年龄、俱乐部等字段正式版从球员资料接口补全。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="player-vini" class="modal" aria-label="维尼修斯信息">
+    <div class="modal-card">
+      <div class="modal-head"><b>维尼修斯 · 🇧🇷 巴西</b><a class="modal-close" href="#">关闭</a></div>
+      <div class="modal-body">
+        <div class="metrics">
+          <div class="metric"><b>4</b><span>进球</span></div>
+          <div class="metric"><b>2</b><span>助攻</span></div>
+          <div class="metric"><b>9</b><span>关键传球</span></div>
+          <div class="metric"><b>2</b><span>出场</span></div>
+        </div>
+        <div class="info-row"><time>关联</time><span>所属球队：<a class="team-link" href="#team-bra">巴西</a> · 可从球员页跳回球队页。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="player-messi" class="modal" aria-label="梅西信息">
+    <div class="modal-card">
+      <div class="modal-head"><b>梅西 · 🇦🇷 阿根廷</b><a class="modal-close" href="#">关闭</a></div>
+      <div class="modal-body">
+        <div class="metrics">
+          <div class="metric"><b>3</b><span>进球</span></div>
+          <div class="metric"><b>2</b><span>助攻</span></div>
+          <div class="metric"><b>11</b><span>射门</span></div>
+          <div class="metric"><b>3</b><span>出场</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="player-assist" class="modal" aria-label="助攻榜球员信息">
+    <div class="modal-card">
+      <div class="modal-head"><b>布鲁诺·费尔南德斯 · 🇵🇹 葡萄牙</b><a class="modal-close" href="#">关闭</a></div>
+      <div class="modal-body">
+        <div class="metrics">
+          <div class="metric"><b>4</b><span>助攻</span></div>
+          <div class="metric"><b>1</b><span>进球</span></div>
+          <div class="metric"><b>13</b><span>关键传球</span></div>
+          <div class="metric"><b>3</b><span>出场</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
