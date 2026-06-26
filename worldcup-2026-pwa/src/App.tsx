@@ -4,6 +4,8 @@ import { KnockoutBracket } from './features/matches/KnockoutBracket'
 import { MatchDetailPanel } from './features/matches/MatchDetailPanel'
 import { MatchSchedule } from './features/matches/MatchSchedule'
 import { matches } from './features/matches/matchData'
+import { NewsFeed } from './features/news/NewsFeed'
+import { newsItems } from './features/news/newsData'
 import { PlayerLeaderboard } from './features/players/PlayerLeaderboard'
 import { leaderboards } from './features/players/playerLeaderboardData'
 import { StandingsSection } from './features/standings/StandingsSection'
@@ -51,17 +53,7 @@ function App() {
               </div>
             </section>
 
-            <section className="news-grid">
-              <article className="focus-news">
-                <b>巴西 2-1 暂时领先德国，维尼修斯边路连续制造威胁</b>
-                <span>实时战报 · 关键事件 · 技术统计同步更新</span>
-              </article>
-              <div className="news-list">
-                <a href="https://www.fifa.com/" target="_blank">法国今晚迎战墨西哥，姆巴佩预计首发出场</a>
-                <a href="https://www.espn.com/soccer/" target="_blank">阿根廷 3-0 完胜日本，梅西传射建功</a>
-                <a href="https://worldcup.cctv.com/" target="_blank">淘汰赛席位形势：A 组前两名基本明朗</a>
-              </div>
-            </section>
+            <NewsFeed items={newsItems} />
 
             <MatchSchedule matches={matches} />
             <KnockoutBracket />
