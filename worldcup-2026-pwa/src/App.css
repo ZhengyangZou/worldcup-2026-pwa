@@ -127,7 +127,8 @@
 
 .card,
 .group-card,
-.match-card {
+.match-card,
+.topbar {
   scroll-margin-top: 76px;
 }
 
