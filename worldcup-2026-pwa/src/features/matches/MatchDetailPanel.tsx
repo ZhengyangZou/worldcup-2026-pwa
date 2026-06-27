@@ -27,7 +27,7 @@ export function MatchDetailPanel({ match }: MatchDetailPanelProps) {
           </span>
         ))}
       </div>
-      <p className="note">直播和集锦以当地版权可用性为准；正式版优先匹配具体场次链接。</p>
+      <p className="note">直播和集锦以当地版权可用性为准；比赛日前优先替换为具体场次链接。</p>
     </section>
   )
 }

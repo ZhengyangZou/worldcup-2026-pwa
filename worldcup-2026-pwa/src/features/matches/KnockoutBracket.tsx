@@ -6,7 +6,7 @@ export function KnockoutBracket() {
       <div className="card-head">
         <div>
           <h2>淘汰赛对阵图</h2>
-          <p>正式赛程确认后自动替换占位对阵</p>
+          <p>赛程确认后手动更新占位对阵</p>
         </div>
       </div>
       <div className="knockout-strip">

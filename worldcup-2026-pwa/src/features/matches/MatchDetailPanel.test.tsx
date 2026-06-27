@@ -31,6 +31,6 @@ describe('MatchDetailPanel', () => {
     }
 
     expect(screen.getByRole('tab', { name: '赛况' })).toHaveAttribute('aria-selected', 'true')
-    expect(screen.getByText('直播和集锦以当地版权可用性为准；正式版优先匹配具体场次链接。')).toBeInTheDocument()
+    expect(screen.getByText('直播和集锦以当地版权可用性为准；比赛日前优先替换为具体场次链接。')).toBeInTheDocument()
   })
 })
