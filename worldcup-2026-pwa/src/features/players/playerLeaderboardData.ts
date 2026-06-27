@@ -21,7 +21,7 @@ const scorers: LeaderboardEntry[] = [
   ['david', '戴维', '加拿大', '🇨🇦', '前锋', 1, '#d52b1e'],
   ['nunez', '努涅斯', '乌拉圭', '🇺🇾', '前锋', 1, '#6bc4e8'],
   ['osimhen', '奥斯梅恩', '尼日利亚', '🇳🇬', '前锋', 1, '#128c45'],
-  ['extra', '候补球员', '美国', '🇺🇸', '前锋', 1, '#223a70'],
+  ['pulisic', '普利西奇', '美国', '🇺🇸', '边锋', 1, '#223a70'],
 ].map(([playerId, playerName, teamName, teamFlag, position, value, fallbackColor]) => ({
   playerId: String(playerId),
   playerName: String(playerName),
