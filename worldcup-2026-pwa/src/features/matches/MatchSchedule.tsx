@@ -44,7 +44,7 @@ export function MatchSchedule({ matches }: MatchScheduleProps) {
               <small>{match.status}</small>
               <div>
                 {match.links.map((link) => (
-                  <a href={link.href} key={link.label} rel="noreferrer" target="_blank">
+                  <a href={link.href} key={link.label} rel="noopener noreferrer" target="_blank">
                     {link.label}
                   </a>
                 ))}

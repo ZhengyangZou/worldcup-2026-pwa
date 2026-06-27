@@ -31,12 +31,14 @@ describe('NewsFeed', () => {
     render(<NewsFeed items={news} />)
 
     const featured = screen.getByTestId('featured-news')
+    expect(featured).toHaveAttribute('rel', 'noopener noreferrer')
     expect(within(featured).getByText(news[0].title)).toBeInTheDocument()
     expect(within(featured).getByText('实时战报 · 外链')).toBeInTheDocument()
 
     const links = screen.getAllByTestId('news-link')
     expect(links).toHaveLength(2)
     expect(links[0]).toHaveAttribute('href', 'https://www.fifa.com/')
+    expect(links[0]).toHaveAttribute('rel', 'noopener noreferrer')
     expect(within(links[0]).getByText('FIFA')).toBeInTheDocument()
     expect(within(links[0]).getByText(news[1].title)).toBeInTheDocument()
 

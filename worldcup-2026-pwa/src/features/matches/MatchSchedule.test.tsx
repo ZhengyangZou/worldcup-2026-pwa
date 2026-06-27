@@ -53,6 +53,7 @@ describe('MatchSchedule', () => {
       'href',
       'https://www.tdm.com.mo/zh-hant/live?Channel=6&type=tv',
     )
+    expect(within(liveMatch).getByRole('link', { name: '澳视直播' })).toHaveAttribute('rel', 'noopener noreferrer')
     expect(within(liveMatch).getByRole('link', { name: '央视频' })).toHaveAttribute(
       'href',
       'https://worldcup.cctv.com/',
