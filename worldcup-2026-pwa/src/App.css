@@ -125,6 +125,12 @@
   background: #fff;
 }
 
+.card,
+.group-card,
+.match-card {
+  scroll-margin-top: 76px;
+}
+
 .hero-card {
   padding: 17px 18px;
 }
@@ -239,6 +245,8 @@
 }
 
 .chip {
+  min-height: 30px;
+  padding: 0 2px;
   border: 0;
   background: transparent;
   color: #63746c;
@@ -619,7 +627,22 @@
     padding-left: 56px;
   }
 
+  .match-actions a {
+    min-height: 28px;
+    align-items: center;
+  }
+
   .standing-row {
     grid-template-columns: 22px minmax(0, 1fr) 30px 28px 52px 28px;
+  }
+
+  .leader-row {
+    grid-template-columns: 24px 34px minmax(0, 1fr) auto;
+    gap: 8px;
+  }
+
+  .avatar {
+    width: 34px;
+    height: 34px;
   }
 }
