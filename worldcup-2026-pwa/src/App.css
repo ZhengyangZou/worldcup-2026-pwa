@@ -131,6 +131,12 @@
   scroll-margin-top: 76px;
 }
 
+.anchor-target {
+  display: block;
+  height: 0;
+  scroll-margin-top: 76px;
+}
+
 .hero-card {
   padding: 17px 18px;
 }

@@ -21,6 +21,7 @@ describe('TeamProfileCard', () => {
 
     expect(screen.getByRole('heading', { name: '球队信息' })).toBeInTheDocument()
     expect(screen.getByTestId('team-profile')).toHaveAttribute('id', 'team-D-fra')
+    expect(screen.getByTestId('teams-anchor')).toHaveAttribute('id', '球队')
     expect(screen.getByText('🇫🇷 法国')).toBeInTheDocument()
     expect(screen.getByText('D 组 · FIFA 第 2 · 德尚')).toBeInTheDocument()
     expect(screen.getByText('小组前二')).toBeInTheDocument()

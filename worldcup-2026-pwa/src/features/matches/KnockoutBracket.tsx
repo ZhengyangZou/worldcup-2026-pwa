@@ -2,7 +2,7 @@ const knockoutStages = ['32 强', '16 强', '半决赛', '决赛']
 
 export function KnockoutBracket() {
   return (
-    <section className="card">
+    <section className="card" id="淘汰赛">
       <div className="card-head">
         <div>
           <h2>淘汰赛对阵图</h2>

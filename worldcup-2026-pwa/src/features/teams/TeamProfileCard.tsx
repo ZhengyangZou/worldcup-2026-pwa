@@ -7,6 +7,7 @@ type TeamProfileCardProps = {
 export function TeamProfileCard({ profile }: TeamProfileCardProps) {
   return (
     <section className="card profile-card" data-testid="team-profile" id={`team-${profile.id}`}>
+      <span className="anchor-target" data-testid="teams-anchor" id="球队" />
       <div className="card-head">
         <div>
           <h2>球队信息</h2>
