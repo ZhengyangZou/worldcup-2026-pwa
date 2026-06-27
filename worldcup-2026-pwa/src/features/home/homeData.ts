@@ -3,7 +3,7 @@ import type { HomeHeroContent, MatchdaySummaryContent } from './types'
 export const matchdaySummary: MatchdaySummaryContent = {
   heading: '2026 世界杯 · 比赛日',
   note: '北京时间显示 · 为手机和 PC 分发优化',
-  syncLabel: '实时数据 · 18:42 已刷新',
+  syncLabel: '手动更新 · 示例数据',
 }
 
 export const homeHero: HomeHeroContent = {
