@@ -421,6 +421,9 @@
 }
 
 .standing-row a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
   color: inherit;
   text-decoration: none;
 }
@@ -603,6 +606,9 @@
 }
 
 .detail-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
   padding: 5px 8px;
   border: 1px solid #d8eadf;
   border-radius: 4px;
