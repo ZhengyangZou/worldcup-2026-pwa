@@ -18,9 +18,9 @@ export function MatchSchedule({ matches }: MatchScheduleProps) {
       </div>
       <div className="filters">
         {scheduleFilters.map((item, index) => (
-          <button className={index === 0 ? 'chip active' : 'chip'} key={item}>
+          <span className={index === 0 ? 'chip active' : 'chip'} key={item}>
             {item}
-          </button>
+          </span>
         ))}
       </div>
       <div className="match-list">

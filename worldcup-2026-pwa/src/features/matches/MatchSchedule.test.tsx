@@ -39,6 +39,7 @@ describe('MatchSchedule', () => {
 
     expect(screen.getByRole('heading', { name: '赛程与比分' })).toBeInTheDocument()
     expect(screen.getAllByTestId('match-card')).toHaveLength(2)
+    expect(screen.queryByRole('button', { name: '小组赛' })).not.toBeInTheDocument()
 
     const liveMatch = container.querySelector<HTMLElement>('#match-bra-ger')
     if (!liveMatch) throw new Error('Expected Brazil vs Germany match card')
