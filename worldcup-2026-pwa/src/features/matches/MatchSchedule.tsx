@@ -31,7 +31,7 @@ export function MatchSchedule({ matches }: MatchScheduleProps) {
             id={`match-${match.id}`}
             key={match.id}
           >
-            <a aria-label={`查看${match.home.name}对${match.away.name}赛况`} className="match-card-link" href={`#match-${match.id}`}>
+            <a aria-label={`查看${match.home.name}对${match.away.name}赛况`} className="match-card-link" href={`#match-detail-${match.id}`}>
               <span className="time">
                 <strong>{match.time}</strong>
                 <small>{match.venue}</small>

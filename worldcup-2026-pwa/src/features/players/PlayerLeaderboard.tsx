@@ -1,30 +1,36 @@
+import { useState } from 'react'
+
 import { PlayerAvatar } from './PlayerAvatar'
-import type { LeaderboardEntry } from './types'
+import type { LeaderboardConfig, LeaderboardKind } from './types'
 
 interface PlayerLeaderboardProps {
-  entries: LeaderboardEntry[]
-  title: string
-  unit: string
+  leaderboards: LeaderboardConfig[]
 }
 
-const leaderboardTabs = ['射手榜', '助攻榜', '扑救榜', '黄牌榜']
 const topLimit = 20
 
-export function PlayerLeaderboard({ entries, title, unit }: PlayerLeaderboardProps) {
-  const topEntries = entries.slice(0, topLimit)
+export function PlayerLeaderboard({ leaderboards }: PlayerLeaderboardProps) {
+  const [activeKind, setActiveKind] = useState<LeaderboardKind>(leaderboards[0].kind)
+  const activeLeaderboard = leaderboards.find((leaderboard) => leaderboard.kind === activeKind) ?? leaderboards[0]
+  const topEntries = activeLeaderboard.entries.slice(0, topLimit)
 
   return (
     <section className="card" id="球员榜">
       <div className="card-head">
         <div>
           <h2>球员榜</h2>
-          <p>{title} Top 20</p>
+          <p>{activeLeaderboard.title} Top 20</p>
         </div>
       </div>
       <div className="filters">
-        {leaderboardTabs.map((item) => (
-          <button className={item === title ? 'chip active' : 'chip'} key={item}>
-            {item}
+        {leaderboards.map((leaderboard) => (
+          <button
+            className={leaderboard.kind === activeKind ? 'chip active' : 'chip'}
+            key={leaderboard.kind}
+            onClick={() => setActiveKind(leaderboard.kind)}
+            type="button"
+          >
+            {leaderboard.title}
           </button>
         ))}
       </div>
@@ -46,7 +52,7 @@ export function PlayerLeaderboard({ entries, title, unit }: PlayerLeaderboardPro
               <b>{entry.playerName}</b>
               <small>{entry.teamFlag} {entry.teamName} · {entry.position}</small>
             </span>
-            <strong aria-label={`${entry.value}${unit}`}>{entry.value}</strong>
+            <strong aria-label={`${entry.value}${activeLeaderboard.unit}`}>{entry.value}</strong>
           </a>
         ))}
       </div>

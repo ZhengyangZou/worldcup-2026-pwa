@@ -23,6 +23,7 @@ describe('MatchDetailPanel', () => {
     render(<MatchDetailPanel match={match} />)
 
     expect(screen.getByRole('heading', { name: '比赛详情' })).toBeInTheDocument()
+    expect(screen.getByTestId('match-detail-panel')).toHaveAttribute('id', 'match-detail-bra-ger')
     expect(screen.getByText('🇧🇷 巴西 2-1 🇩🇪 德国')).toBeInTheDocument()
 
     for (const tab of ['赛况', '阵容', '数据', '集锦', '新闻']) {

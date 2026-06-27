@@ -8,7 +8,7 @@ const detailTabs = ['赛况', '阵容', '数据', '集锦', '新闻']
 
 export function MatchDetailPanel({ match }: MatchDetailPanelProps) {
   return (
-    <section className="card">
+    <section className="card" data-testid="match-detail-panel" id={`match-detail-${match.id}`}>
       <div className="card-head">
         <h2>比赛详情</h2>
       </div>

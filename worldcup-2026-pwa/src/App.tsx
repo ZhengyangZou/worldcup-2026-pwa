@@ -22,8 +22,6 @@ import { tournamentMetrics } from './features/tournament/tournamentData'
 import { AppHeader } from './layout/AppHeader'
 
 function App() {
-  const primaryLeaderboard = leaderboards[0]
-
   return (
     <div className="app-shell">
       <AppHeader activeLabel="首页" />
@@ -44,16 +42,16 @@ function App() {
               <StandingsSection groups={groupStandings} thirdPlaceCandidates={thirdPlaceCandidates} />
 
               <PlayerLeaderboard
-                entries={primaryLeaderboard.entries}
-                title={primaryLeaderboard.title}
-                unit={primaryLeaderboard.unit}
+                leaderboards={leaderboards}
               />
             </div>
           </div>
 
           <aside className="side-column">
             <TournamentOverview metrics={tournamentMetrics} />
-            <MatchDetailPanel match={matches[0]} />
+            {matches.map((match) => (
+              <MatchDetailPanel key={match.id} match={match} />
+            ))}
             <PlayerProfileCard profile={featuredPlayer} />
             <TeamProfileCard profile={featuredTeam} />
           </aside>

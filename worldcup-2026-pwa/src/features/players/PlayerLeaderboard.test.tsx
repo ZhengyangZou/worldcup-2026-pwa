@@ -1,8 +1,8 @@
-import { render, screen, within } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import { PlayerLeaderboard } from './PlayerLeaderboard'
-import type { LeaderboardEntry } from './types'
+import type { LeaderboardConfig, LeaderboardEntry } from './types'
 
 const entries: LeaderboardEntry[] = Array.from({ length: 22 }, (_, index) => ({
   playerId: `player-${index + 1}`,
@@ -17,7 +17,7 @@ const entries: LeaderboardEntry[] = Array.from({ length: 22 }, (_, index) => ({
 
 describe('PlayerLeaderboard', () => {
   it('shows the selected leaderboard as top 20 with avatar fallback and player links', () => {
-    render(<PlayerLeaderboard entries={entries} title="射手榜" unit="球" />)
+    render(<PlayerLeaderboard leaderboards={[{ entries, kind: 'goals', title: '射手榜', unit: '球' }]} />)
 
     expect(screen.getByRole('heading', { name: '球员榜' })).toBeInTheDocument()
     expect(screen.getByText('射手榜 Top 20')).toBeInTheDocument()
@@ -34,5 +34,27 @@ describe('PlayerLeaderboard', () => {
 
     const secondRow = screen.getAllByTestId('leader-row')[1]
     expect(within(secondRow).getByAltText('球员2头像')).toHaveAttribute('src', 'https://example.com/avatar.jpg')
+  })
+
+  it('switches between simple leaderboard tabs', async () => {
+    const leaderboards: LeaderboardConfig[] = [
+      { entries, kind: 'goals', title: '射手榜', unit: '球' },
+      {
+        entries: entries.map((entry, index) => ({ ...entry, value: 10 - index })),
+        kind: 'assists',
+        title: '助攻榜',
+        unit: '次',
+      },
+    ]
+
+    render(<PlayerLeaderboard leaderboards={leaderboards} />)
+
+    fireEvent.click(screen.getByRole('button', { name: '助攻榜' }))
+
+    expect(screen.getByText('助攻榜 Top 20')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '助攻榜' })).toHaveClass('active')
+    await waitFor(() => {
+      expect(within(screen.getAllByTestId('leader-row')[0]).getByLabelText('10次')).toBeInTheDocument()
+    })
   })
 })

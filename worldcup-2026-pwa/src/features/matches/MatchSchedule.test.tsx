@@ -42,6 +42,10 @@ describe('MatchSchedule', () => {
 
     const liveMatch = container.querySelector<HTMLElement>('#match-bra-ger')
     if (!liveMatch) throw new Error('Expected Brazil vs Germany match card')
+    expect(within(liveMatch).getByRole('link', { name: '查看巴西对德国赛况' })).toHaveAttribute(
+      'href',
+      '#match-detail-bra-ger',
+    )
     expect(within(liveMatch).getByText('🇧🇷')).toBeInTheDocument()
     expect(within(liveMatch).getByText('巴西')).toBeInTheDocument()
     expect(within(liveMatch).getByText('德国')).toBeInTheDocument()
