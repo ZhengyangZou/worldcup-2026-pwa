@@ -39,7 +39,7 @@ export function PlayerLeaderboard({ leaderboards }: PlayerLeaderboardProps) {
           <a
             className="leader-row"
             data-testid="leader-row"
-            href={`#player-${entry.playerId}`}
+            href="#球员信息"
             key={entry.playerId}
           >
             <span className="rank">{index + 1}</span>

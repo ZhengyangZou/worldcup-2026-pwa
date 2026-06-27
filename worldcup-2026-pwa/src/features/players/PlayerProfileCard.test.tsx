@@ -21,6 +21,7 @@ describe('PlayerProfileCard', () => {
 
     expect(screen.getByRole('heading', { name: '球员信息' })).toBeInTheDocument()
     expect(screen.getByTestId('player-profile')).toHaveAttribute('id', 'player-mbappe')
+    expect(screen.getByTestId('player-info-anchor')).toHaveAttribute('id', '球员信息')
     expect(screen.getByText('姆巴佩')).toBeInTheDocument()
     expect(screen.getByText('🇫🇷 法国 · 前锋 · 27岁')).toBeInTheDocument()
     expect(screen.getByText('本届 5 球 1 助攻')).toBeInTheDocument()

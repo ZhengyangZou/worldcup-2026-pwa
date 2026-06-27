@@ -25,7 +25,7 @@ describe('PlayerLeaderboard', () => {
     expect(screen.queryByText('球员21')).not.toBeInTheDocument()
 
     const firstRow = screen.getAllByTestId('leader-row')[0]
-    expect(firstRow).toHaveAttribute('href', '#player-player-1')
+    expect(firstRow).toHaveAttribute('href', '#球员信息')
     expect(within(firstRow).getByText('姆巴佩')).toBeInTheDocument()
     expect(within(firstRow).getByText('🇫🇷 法国 · 前锋')).toBeInTheDocument()
     expect(within(firstRow).getByText('22')).toBeInTheDocument()
