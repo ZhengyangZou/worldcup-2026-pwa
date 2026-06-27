@@ -1,4 +1,4 @@
-const knockoutStages = ['32 强', '16 强', '半决赛', '决赛']
+const knockoutStages = ['32 强', '16 强', '8 强', '半决赛', '决赛']
 
 export function KnockoutBracket() {
   return (

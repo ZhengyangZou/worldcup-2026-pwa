@@ -8,5 +8,6 @@ describe('KnockoutBracket', () => {
     render(<KnockoutBracket />)
 
     expect(screen.getByRole('heading', { name: '淘汰赛对阵图' }).closest('section')).toHaveAttribute('id', '淘汰赛')
+    expect(screen.getByRole('heading', { name: '8 强' })).toBeInTheDocument()
   })
 })
