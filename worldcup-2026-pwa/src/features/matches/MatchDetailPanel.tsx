@@ -27,6 +27,13 @@ export function MatchDetailPanel({ match }: MatchDetailPanelProps) {
           </span>
         ))}
       </div>
+      <div className="detail-links" aria-label="本场比赛媒体入口">
+        {match.links.map((link) => (
+          <a href={link.href} key={link.label} rel="noopener noreferrer" target="_blank">
+            {link.label}
+          </a>
+        ))}
+      </div>
       <p className="note">直播和集锦以当地版权可用性为准；比赛日前优先替换为具体场次链接。</p>
     </section>
   )

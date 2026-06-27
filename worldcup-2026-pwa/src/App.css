@@ -584,6 +584,23 @@
   box-shadow: inset 0 -2px 0 #16b33f;
 }
 
+.detail-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 14px 12px;
+}
+
+.detail-links a {
+  padding: 5px 8px;
+  border: 1px solid #d8eadf;
+  border-radius: 4px;
+  color: #16b33f;
+  font-size: 11px;
+  font-weight: 900;
+  text-decoration: none;
+}
+
 .note {
   padding: 0 14px 14px;
 }
