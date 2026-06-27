@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import { MatchDetailPanel } from './MatchDetailPanel'
@@ -37,5 +37,9 @@ describe('MatchDetailPanel', () => {
       'https://www.tdm.com.mo/zh-hant/live?Channel=6&type=tv',
     )
     expect(screen.getByRole('link', { name: '澳视直播' })).toHaveAttribute('rel', 'noopener noreferrer')
+
+    fireEvent.click(screen.getByRole('tab', { name: '集锦' }))
+    expect(screen.getByRole('tab', { name: '集锦' })).toHaveAttribute('aria-selected', 'true')
+    expect(screen.getByText('集锦入口会优先使用 FIFA 和央视频的具体场次视频。')).toBeInTheDocument()
   })
 })

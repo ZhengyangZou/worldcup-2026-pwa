@@ -571,9 +571,11 @@
   font-weight: 900;
 }
 
-.detail-tabs span {
+.detail-tabs button {
   flex: 0 0 auto;
   padding: 7px 4px;
+  border: 0;
+  background: transparent;
   color: #617069;
   font-size: 12px;
   font-weight: 900;
@@ -582,6 +584,14 @@
 .detail-tabs .active {
   color: #16b33f;
   box-shadow: inset 0 -2px 0 #16b33f;
+}
+
+.detail-tab-note {
+  margin: 0;
+  padding: 0 14px 12px;
+  color: #4e5f56;
+  font-size: 12px;
+  line-height: 1.55;
 }
 
 .detail-links {
