@@ -1,32 +1,30 @@
-# React + TypeScript + Vite
+# 2026 世界杯数据中心
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+个人和亲友使用的轻量 PWA，用来查看 2026 世界杯赛程比分、分组积分、球员榜、新闻外链和每场比赛的直播/集锦入口。
 
-Currently, two official plugins are available:
+## 当前范围
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- 赛程与比分：展示比赛、比分、状态、直播和集锦链接。
+- 比赛详情：从比赛卡片跳转到对应详情卡，保留赛况、阵容、数据、集锦、新闻 Tab。
+- 分组积分：展示 12 个小组和小组第三名排名。
+- 球员榜：保留射手榜、助攻榜、扑救榜、黄牌榜，使用简单 Tab 切换。
+- 新闻：只展示标题、来源和外链，不抓正文。
+- PWA：支持手机和 PC 浏览器访问，可作为网页分享。
 
-## React Compiler
+## 常用命令
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+pnpm install
+pnpm test
+pnpm lint
+pnpm build
+pnpm dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## 数据更新
+
+大多数内容都在 `src/features/*/*Data.ts` 文件中手动维护。具体位置见 [数据更新指南](./docs/data-update-guide.md)。
+
+## 部署
+
+当前项目适合部署到 GitHub Pages。内地访问速度不稳定时，可以另外准备一个镜像入口，代码不用分叉。
