@@ -18,12 +18,12 @@ describe('HomeHero', () => {
         eyebrow="FIFA WORLD CUP 2026"
         metrics={metrics}
         summary="聚合实时比分、赛程、12 组积分、第三名排名、球员榜、新闻和每场比赛的直播/集锦入口。"
-        title="今天 3 场比赛，1 场正在进行"
+        title="今日赛程概览"
       />,
     )
 
     expect(screen.getByText('FIFA WORLD CUP 2026')).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: '今天 3 场比赛，1 场正在进行' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '今日赛程概览' })).toBeInTheDocument()
     expect(screen.getAllByTestId('hero-metric')).toHaveLength(4)
   })
 })

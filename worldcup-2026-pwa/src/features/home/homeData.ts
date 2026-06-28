@@ -15,5 +15,5 @@ export const homeHero: HomeHeroContent = {
     { label: '决赛日', value: '7/19' },
   ],
   summary: '聚合实时比分、赛程、12 组积分、第三名排名、球员榜、新闻和每场比赛的直播/集锦入口。',
-  title: '今天 3 场比赛，1 场正在进行',
+  title: '今日赛程概览',
 }

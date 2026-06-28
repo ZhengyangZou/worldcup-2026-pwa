@@ -1,14 +1,14 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import { TournamentOverview } from './TournamentOverview'
 import type { TournamentMetric } from './types'
 
 const metrics: TournamentMetric[] = [
-  { id: 'played', label: '已赛', value: '32' },
-  { id: 'remaining', label: '待赛', value: '72' },
-  { id: 'goals', label: '总进球', value: '91' },
-  { id: 'average', label: '场均进球', value: '2.84' },
+  { id: 'listed', label: '已录入', value: '3' },
+  { id: 'live', label: '进行中', value: '1' },
+  { id: 'finished', label: '已结束', value: '1' },
+  { id: 'upcoming', label: '待开', value: '1' },
 ]
 
 describe('TournamentOverview', () => {
@@ -18,9 +18,10 @@ describe('TournamentOverview', () => {
     expect(screen.getByRole('heading', { name: '赛事概览' })).toBeInTheDocument()
     expect(screen.getAllByTestId('overview-metric')).toHaveLength(4)
 
-    for (const metric of metrics) {
-      expect(screen.getByText(metric.value)).toBeInTheDocument()
-      expect(screen.getByText(metric.label)).toBeInTheDocument()
-    }
+    const metricRows = screen.getAllByTestId('overview-metric')
+    metrics.forEach((metric, index) => {
+      expect(within(metricRows[index]).getByText(metric.value)).toBeInTheDocument()
+      expect(within(metricRows[index]).getByText(metric.label)).toBeInTheDocument()
+    })
   })
 })
