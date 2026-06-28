@@ -67,4 +67,11 @@ describe('MatchSchedule', () => {
       'https://www.youtube.com/@fifa',
     )
   })
+
+  it('renders an empty state before matches are added', () => {
+    render(<MatchSchedule matches={[]} />)
+
+    expect(screen.getByText('暂无赛程数据')).toBeInTheDocument()
+    expect(screen.getByText('赛程公布后可在 matchData.ts 中补充比赛、直播和集锦链接。')).toBeInTheDocument()
+  })
 })

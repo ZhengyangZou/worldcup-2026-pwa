@@ -214,8 +214,34 @@
   grid-template-columns: 1fr;
 }
 
-.empty-news {
+.empty-state {
+  display: grid;
+  gap: 6px;
   min-height: 96px;
+  padding: 15px;
+  color: #4e5f56;
+}
+
+.empty-state b {
+  color: inherit;
+  font-size: 16px;
+}
+
+.empty-state span {
+  color: #718078;
+  font-size: 12px;
+}
+
+.focus-news.empty-state {
+  color: #fff;
+}
+
+.focus-news.empty-state span {
+  color: rgba(255, 255, 255, .82);
+}
+
+.match-empty {
+  border-top: 1px solid #edf2ef;
 }
 
 .news-list {

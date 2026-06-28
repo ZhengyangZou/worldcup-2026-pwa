@@ -21,7 +21,7 @@ export function PlayerLeaderboard({ leaderboards }: PlayerLeaderboardProps) {
             <p>等待比赛数据</p>
           </div>
         </div>
-        <div className="empty-news">
+        <div className="empty-state">
           <b>暂无球员榜数据</b>
           <span>比赛开始后可补充射手、助攻、扑救等榜单。</span>
         </div>

@@ -24,7 +24,12 @@ export function MatchSchedule({ matches }: MatchScheduleProps) {
         ))}
       </div>
       <div className="match-list">
-        {matches.map((match) => (
+        {matches.length === 0 ? (
+          <div className="empty-state match-empty">
+            <b>暂无赛程数据</b>
+            <span>赛程公布后可在 matchData.ts 中补充比赛、直播和集锦链接。</span>
+          </div>
+        ) : matches.map((match) => (
           <article
             className="match-card"
             data-testid="match-card"
