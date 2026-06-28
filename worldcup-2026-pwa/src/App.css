@@ -84,6 +84,13 @@
   font-size: 12px;
 }
 
+.source-label {
+  display: block;
+  margin-top: 5px;
+  color: #8a9991;
+  font-size: 11px;
+}
+
 .sync,
 .pill,
 .chip,

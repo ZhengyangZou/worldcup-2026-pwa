@@ -13,5 +13,6 @@ export type HomeHeroContent = {
 export type MatchdaySummaryContent = {
   heading: string
   note: string
+  sourceLabel: string
   syncLabel: string
 }

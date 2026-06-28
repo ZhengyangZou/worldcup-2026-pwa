@@ -3,6 +3,7 @@ import type { HomeHeroContent, MatchdaySummaryContent } from './types'
 export const matchdaySummary: MatchdaySummaryContent = {
   heading: '2026 世界杯 · 比赛日',
   note: '北京时间显示 · 为手机和 PC 分发优化',
+  sourceLabel: '来源：FIFA / 央视 / 澳视 / YouTube 官方频道',
   syncLabel: '手动更新 · 本地资料库',
 }
 
