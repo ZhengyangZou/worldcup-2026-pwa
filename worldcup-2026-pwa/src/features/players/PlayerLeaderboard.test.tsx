@@ -57,4 +57,11 @@ describe('PlayerLeaderboard', () => {
       expect(within(screen.getAllByTestId('leader-row')[0]).getByLabelText('10次')).toBeInTheDocument()
     })
   })
+
+  it('renders an empty state when no leaderboards are available', () => {
+    render(<PlayerLeaderboard leaderboards={[]} />)
+
+    expect(screen.getByText('暂无球员榜数据')).toBeInTheDocument()
+    expect(screen.getByText('比赛开始后可补充射手、助攻、扑救等榜单。')).toBeInTheDocument()
+  })
 })
