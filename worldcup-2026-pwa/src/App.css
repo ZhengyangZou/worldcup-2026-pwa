@@ -210,6 +210,14 @@
   font-size: 12px;
 }
 
+.news-empty {
+  grid-template-columns: 1fr;
+}
+
+.empty-news {
+  min-height: 96px;
+}
+
 .news-list {
   display: grid;
   gap: 8px;

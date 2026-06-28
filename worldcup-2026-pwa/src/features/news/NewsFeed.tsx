@@ -5,6 +5,17 @@ interface NewsFeedProps {
 }
 
 export function NewsFeed({ items }: NewsFeedProps) {
+  if (items.length === 0) {
+    return (
+      <section className="news-grid news-empty" id="新闻">
+        <div className="focus-news empty-news">
+          <b>暂无新闻外链</b>
+          <span>比赛日前可手动补充 FIFA、央视或可信媒体链接。</span>
+        </div>
+      </section>
+    )
+  }
+
   const featured = items.find((item) => item.featured) ?? items[0]
   const listItems = items.filter((item) => item.id !== featured.id)
 

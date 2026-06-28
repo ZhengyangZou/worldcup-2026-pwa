@@ -44,4 +44,11 @@ describe('NewsFeed', () => {
 
     expect(screen.queryByText('正文')).not.toBeInTheDocument()
   })
+
+  it('renders a lightweight empty state when no news links are available', () => {
+    render(<NewsFeed items={[]} />)
+
+    expect(screen.getByText('暂无新闻外链')).toBeInTheDocument()
+    expect(screen.getByText('比赛日前可手动补充 FIFA、央视或可信媒体链接。')).toBeInTheDocument()
+  })
 })
