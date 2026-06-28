@@ -16,3 +16,9 @@ export type MatchdaySummaryContent = {
   sourceLabel: string
   syncLabel: string
 }
+
+export type MatchdaySummaryActions = {
+  isRefreshing?: boolean
+  lastUpdated?: string
+  onRefresh?: () => void
+}

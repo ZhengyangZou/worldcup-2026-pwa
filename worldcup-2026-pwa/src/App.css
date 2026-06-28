@@ -100,6 +100,20 @@
   font-weight: 900;
 }
 
+.sync-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.sync-actions small {
+  color: #718078;
+  font-size: 11px;
+  font-weight: 800;
+}
+
 .sync,
 .pill {
   padding: 7px 10px;
@@ -107,6 +121,22 @@
   background: #fff;
   color: #52645c;
   white-space: nowrap;
+}
+
+.refresh-button {
+  min-height: 31px;
+  padding: 7px 10px;
+  border: 1px solid #bfe6cc;
+  border-radius: 4px;
+  background: #16b33f;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.refresh-button:disabled {
+  opacity: .62;
 }
 
 .dashboard {
@@ -695,6 +725,10 @@
 
   .sync {
     display: inline-block;
+  }
+
+  .sync-actions {
+    justify-content: flex-start;
     margin-top: 8px;
   }
 
