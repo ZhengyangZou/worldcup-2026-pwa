@@ -18,10 +18,12 @@ import { groupStandings, thirdPlaceCandidates } from './features/standings/stand
 import { TeamProfileCard } from './features/teams/TeamProfileCard'
 import { featuredTeam } from './features/teams/teamProfileData'
 import { TournamentOverview } from './features/tournament/TournamentOverview'
-import { tournamentMetrics } from './features/tournament/tournamentData'
+import { buildTournamentMetrics } from './features/tournament/tournamentMetrics'
 import { AppHeader } from './layout/AppHeader'
 
 function App() {
+  const tournamentMetrics = buildTournamentMetrics(matches)
+
   return (
     <div className="app-shell">
       <AppHeader activeLabel="首页" />

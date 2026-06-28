@@ -93,7 +93,7 @@
 
 首页比赛日摘要：`src/features/home/homeData.ts`
 
-右侧赛事概览：`src/features/tournament/tournamentData.ts`
+右侧赛事概览：由 `src/features/matches/matchData.ts` 自动汇总。
 
 这些数据可以按比赛日手动更新。
 
