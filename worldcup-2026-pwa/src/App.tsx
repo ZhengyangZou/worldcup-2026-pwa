@@ -2,7 +2,8 @@ import './App.css'
 
 import { HomeHero } from './features/home/HomeHero'
 import { MatchdaySummary } from './features/home/MatchdaySummary'
-import { homeHero, matchdaySummary } from './features/home/homeData'
+import { matchdaySummary } from './features/home/homeData'
+import { buildHomeHeroContent } from './features/home/homeHeroContent'
 import { KnockoutBracket } from './features/matches/KnockoutBracket'
 import { MatchDetailPanel } from './features/matches/MatchDetailPanel'
 import { MatchSchedule } from './features/matches/MatchSchedule'
@@ -22,6 +23,7 @@ import { buildTournamentMetrics } from './features/tournament/tournamentMetrics'
 import { AppHeader } from './layout/AppHeader'
 
 function App() {
+  const homeHero = buildHomeHeroContent(matches)
   const tournamentMetrics = buildTournamentMetrics(matches)
 
   return (
